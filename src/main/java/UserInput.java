@@ -9,7 +9,7 @@ public class UserInput {
         String userWords = object.nextLine();
         Echo text = new Echo();
         while (!userWords.equals("bye")) {
-            validityOfWords(userWords, text);
+            System.out.print(validityOfWords(userWords, text));
             object = new Scanner(System.in);
             userWords = object.nextLine();
         }
@@ -17,12 +17,21 @@ public class UserInput {
 
     }
 
-    public static void validityOfWords(String s, Echo e) {
+    public static String validityOfWords(String s, Echo e) {
+        String t = "";
         if (s.equals("list")) {
-            e.printList();
-        } else {
-            e.addToList(s);
+            t += "Here are the tasks in your list: \n";
+            t += e.printList();
+        } else if (s.contains("unmark")) {
+            t += e.unmark(Integer.valueOf(s.substring(7))) + "\n";
+        } else if (s.contains("mark")) {
+            t += e.mark(Integer.valueOf(s.substring(5))) + "\n";
         }
+        else {
+            return e.addToList(s);
+        }
+        return t;
+
     }
 }
 

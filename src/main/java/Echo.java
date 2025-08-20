@@ -2,22 +2,30 @@ import java.util.ArrayList;
 
 public class Echo {
 
-    protected ArrayList<String> taskList = new ArrayList<>();
+    protected ArrayList<Task> taskList = new ArrayList<>();
 
-    public void addToList(String s) {
-        taskList.add(s);
-        System.out.print("added: ");
-        echo(s);
+    public String addToList(String s) {
+        Task t = new Task(s);
+        taskList.add(t);
+        return "added: " + s + "\n";
+    }
+
+    public String mark(Integer i) {
+        taskList.get(i-1).mark();
+        return "Well done! I have marked this particular task as done: \n" + taskList.get(i-1).toString();
+    }
+
+    public String unmark(Integer i) {
+        taskList.get(i-1).unMark();
+        return "Okay, I have marked this particular task as not done yet: \n" + taskList.get(i-1).toString();
     }
 
 
-    public static void echo(String word) {
-        System.out.println(word);
-    }
-
-    public void printList() {
+    public String printList() {
+        String line = "";
         for (int i = 0; i < taskList.size(); i++ ) {
-            System.out.println(String.valueOf(i+1) + ". " +  taskList.get(i));
+            line += String.valueOf(i+1) + "." +  taskList.get(i).toString() + "\n";
         }
+        return line;
     }
 }
