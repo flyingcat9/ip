@@ -1,8 +1,18 @@
 import java.util.Scanner;
 
+/**
+ * This class takes user input and
+ * manages the interactions with the user.
+ *
+ * @author Ong Li Min
+ */
 
 public class UserInput {
 
+    /**
+     * This method maintains the main function and the starting
+     * phrases from the chatbot.
+     */
     public static void starting() {
         System.out.println("Hello! I'm Jocelyn. What can I do for you?");
         Scanner object = new Scanner(System.in);
@@ -14,9 +24,14 @@ public class UserInput {
             userWords = object.nextLine();
         }
         System.out.println("Bye, I hope to see you soon!");
-
     }
 
+    /**
+     * This function checks to see what the user wants to do.
+     * @param s user's message
+     * @param e the echo they have
+     * @return formatted String
+     */
     public static String validityOfWords(String s, Echo e) {
         String t = "";
         if (s.equals("list")) {
@@ -31,7 +46,6 @@ public class UserInput {
             return e.addToList(s);
         }
         return t;
-
     }
 }
 
