@@ -7,7 +7,13 @@
 
 import java.util.ArrayList;
 
-public class Echo {
+public class TaskList {
+
+    enum TaskType{
+        TODO,
+        DEADLINES,
+        EVENTS
+    }
 
     protected ArrayList<Task> taskList = new ArrayList<>();
 
