@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,11 @@ public class UserInput {
         while (!userWords.equals("bye")) {
             System.out.print(validityOfWords(userWords, text));
             object = new Scanner(System.in);
-            userWords = object.nextLine();
+            try {
+                userWords = object.nextLine();
+            } catch (NoSuchElementException error) {
+                System.out.println(error);
+            }
         }
         System.out.println("Bye, I hope to see you soon!");
     }

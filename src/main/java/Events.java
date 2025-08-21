@@ -13,4 +13,8 @@ public class Events extends Task{
         this.startingTime = sT;
         this.endingTime = eT;
     }
+
+    public String toString() {
+        return "[Events]" + super.toString() + "from: " + startingTime + "to: " + endingTime;
+    }
 }

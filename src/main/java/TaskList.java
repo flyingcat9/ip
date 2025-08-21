@@ -86,7 +86,7 @@ public class TaskList {
      *
      */
     public String delete(Integer i) {
-        String stringy = taskList.get(i).toString();
+        String stringy = taskList.get(i-1).toString();
         taskList.remove(i - 1);
         return "Noted. I have removed the current task!" + stringy + "Now, you have " +
                 taskList.size() + " items in this list.";
