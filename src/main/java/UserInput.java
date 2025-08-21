@@ -42,7 +42,9 @@ public class UserInput {
             t += e.unmark(Integer.valueOf(s.substring(7))) + "\n";
         } else if (s.contains("mark")) {
             t += e.mark(Integer.valueOf(s.substring(5))) + "\n";
-        } else {
+        } else if (s.contains("delete")) {
+            t += e.delete(Integer.valueOf(s.substring(s.indexOf("delete") + 7))) + "\n";
+        }else {
             try {
                 t += e.addToList(s);
             } catch (InvalidInput error) {

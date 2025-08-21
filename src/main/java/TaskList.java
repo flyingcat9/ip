@@ -22,10 +22,31 @@ public class TaskList {
      * @param s task to be added
      * @return added: task
      */
-    public String addToList(String s) {
-        Task t = new Task(s);
-        taskList.add(t);
-        return "added: " + s + "\n";
+    public String addToList(String s) throws InvalidInput, EmptyList {
+        Task t = null;
+        if (s.contains("todo")) {
+            if (s.indexOf("todo") + 4 < s.length()) {
+                t = new ToDo(s.substring(s.indexOf("todo") + 4).trim());
+            } else {
+                throw new EmptyList();
+            }
+        } else if (s.contains("/by")) {
+            if (s.indexOf("/by") + 3 < s.length()) {
+                t = new Deadlines(s.substring(0, s.indexOf("/by")), s.substring(s.indexOf("/by") + 3));
+            } else {
+                throw new EmptyList();
+            }
+        } else if (s.contains("/from") || s.contains("/to")) {
+            if (s.indexOf("/by") + 3 < s.length() && s.indexOf("/from") + 3 < s.length())
+                t = new Events(s.substring(0, s.indexOf("/from")), s.substring(s.indexOf("/from") + 5,
+                        s.indexOf("/to")), s.substring(s.indexOf("/to") + 3));
+        }
+        if (t != null) {
+           taskList.add(t);
+       }  else {
+           throw new InvalidInput();
+       }
+       return "added: " + t.toString() + "\n";
     }
 
     /**
@@ -58,5 +79,16 @@ public class TaskList {
             line += String.valueOf(i+1) + "." +  taskList.get(i).toString() + "\n";
         }
         return line;
+    }
+
+    /**
+     * This deletes an item from the list.
+     *
+     */
+    public String delete(Integer i) {
+        String stringy = taskList.get(i).toString();
+        taskList.remove(i - 1);
+        return "Noted. I have removed the current task!" + stringy + "Now, you have " +
+                taskList.size() + " items in this list.";
     }
 }
