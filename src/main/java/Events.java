@@ -4,11 +4,12 @@
  *
  * @author: Ong Li Min
  */
-public class Events {
+public class Events extends Task{
     String startingTime;
     String endingTime;
 
     public Events(String description, String sT, String eT) {
+        super(description);
         this.startingTime = sT;
         this.endingTime = eT;
     }
