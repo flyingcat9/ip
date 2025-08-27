@@ -12,6 +12,10 @@ public class ToDo extends Task{
         super(description);
     }
 
+    /**
+     * string
+     * @return the string
+     */
     public String toString() {
         return "[ToDo]" + super.toString();
     }

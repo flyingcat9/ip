@@ -10,7 +10,7 @@ public class Jocelyn {
 
     /**
      * Main chat bot.
-     * @param args
+     * @param args the main method
      */
     public static void main(String[] args) {
         UserInput u = new UserInput();

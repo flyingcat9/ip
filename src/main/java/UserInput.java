@@ -8,6 +8,11 @@ import java.util.Scanner;
  * @author Ong Li Min
  */
 
+/** just create the scanner once.
+ * normalize input
+ * split into more functions
+ */
+
 public class UserInput {
 
     /**
@@ -15,21 +20,39 @@ public class UserInput {
      * phrases from the chatbot.
      */
     public static void starting() {
-        System.out.println("Hello! I'm Jocelyn. What can I do for you?");
+        UserInput uI = new UserInput();
         Scanner object = new Scanner(System.in);
+        System.out.println(uI.greet());
         String userWords = object.nextLine();
         TaskList text = new TaskList();
-        while (!userWords.equals("bye")) {
-            Input i = new Input();
-            System.out.print(i.validityOfWords(userWords, text));
-            object = new Scanner(System.in);
+        Parser i = new Parser();
+        while (!uI.exitingTheLoop(userWords)) {
             try {
-                userWords = object.nextLine();
-            } catch (NoSuchElementException error) {
-                System.out.println(error);
+                String s = i.validityOfWords(userWords, text);
+                System.out.println(s);
+            } catch (InvalidInput e) {
+                System.out.println(e);
+            } catch (EmptyList t) {
+                System.out.println(t);
             }
+            userWords = object.nextLine();
         }
-        System.out.println("Bye, I hope to see you soon!");
+        System.out.println(uI.ending());
+    }
+
+    public String greet() {
+        return "Hello! I'm Jocelyn. What can I do for you?";
+    }
+
+    public String ending() {
+        return "Bye, I hope to see you soon!";
+    }
+
+    public boolean exitingTheLoop(String input) {
+        if (input == null || input == "" || input == "bye") {
+            return true;
+        }
+        return false;
     }
 
 

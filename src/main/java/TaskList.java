@@ -6,16 +6,30 @@
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TaskList {
 
-    enum TaskType{
+
+    public enum TypesOfTasks{
+        DEADLINE,
         TODO,
-        DEADLINES,
-        EVENTS
+        EVENT,
+        INVALID
     }
 
-    protected ArrayList<Task> taskList = new ArrayList<>();
+
+    public TaskList.TypesOfTasks checkerOfCommand(String s) {
+        for (TypesOfTasks c: TypesOfTasks.values()) {
+            if (s.equalsIgnoreCase(c.name())) {
+                return c;
+            }
+        }
+        return TypesOfTasks.INVALID;
+    }
+
+    ArrayList<Task> taskList = new ArrayList<>();
+
 
     /**
      * This method adds a task to the taskList.
@@ -23,30 +37,56 @@ public class TaskList {
      * @return added: task
      */
     public String addToList(String s) throws InvalidInput, EmptyList {
-        Task t = null;
-        if (s.contains("todo")) {
-            if (s.indexOf("todo") + 4 < s.length()) {
-                t = new ToDo(s.substring(s.indexOf("todo") + 4).trim());
-            } else {
-                throw new EmptyList();
-            }
-        } else if (s.contains("/by")) {
-            if (s.indexOf("/by") + 3 < s.length()) {
-                t = new Deadlines(s.substring(0, s.indexOf("/by")), s.substring(s.indexOf("/by") + 3));
-            } else {
-                throw new EmptyList();
-            }
-        } else if (s.contains("/from") || s.contains("/to")) {
-            if (s.indexOf("/by") + 3 < s.length() && s.indexOf("/from") + 3 < s.length())
-                t = new Events(s.substring(0, s.indexOf("/from")), s.substring(s.indexOf("/from") + 5,
-                        s.indexOf("/to")), s.substring(s.indexOf("/to") + 3));
+        s = s.toLowerCase().trim();
+        String[] p = s.split("\\s+");
+        String stringy = "Got it, I have added this to my list!\n ";
+        switch(this.checkerOfCommand(p[0])) {
+            case TODO:
+                if (p.length > 1) {
+                    Task todo = new ToDo(String.join("", Arrays.copyOfRange(p, 1, p.length)));
+                    taskList.add(todo);
+                    stringy += todo.toString();
+                } else {
+                    throw new EmptyList();
+                }
+                break;
+            case DEADLINE:
+                if (p.length > 1 && Arrays.asList(p).contains("/by")) {
+                    int indexOfBy = this.finder(p, "/by");
+                    String task  = String.join("", Arrays.copyOfRange(p, 1, indexOfBy));
+                    String d = String.join("", Arrays.copyOfRange(p, indexOfBy, p.length - 1));
+                    Task deadline = new Deadlines(task, d);
+                    taskList.add(deadline);
+                    stringy += deadline.toString();
+                } else {
+                    throw new InvalidInput("invaild input");
+                }
+                break;
+            case EVENT:
+                if (p.length > 1 && Arrays.asList(p).contains("/from") && Arrays.asList(p).contains("/to")) {
+                    int indexOfFrom = this.finder(p, "/from");
+                    int indexOfTo = this.finder(p, "/to");
+                    String description = String.join("", Arrays.copyOfRange(p, 1, indexOfFrom));
+                    String startingTime = String.join("", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo));
+                    String endingTime = String.join("", Arrays.copyOfRange(p, indexOfTo + 1, p.length - 1));
+                    Task event = new Events(description, startingTime, endingTime);
+                    taskList.add(event);
+                    stringy += event.toString();
+                } else {
+                    throw new InvalidInput("invalid input");
+                }
+                break;
         }
-        if (t != null) {
-           taskList.add(t);
-       }  else {
-           throw new InvalidInput();
-       }
-       return "added: " + t.toString() + "\n";
+        return stringy;
+    }
+
+    public int finder(String[] array, String term) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(term)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -75,8 +115,10 @@ public class TaskList {
      */
     public String printList() {
         String line = "";
-        for (int i = 0; i < taskList.size(); i++ ) {
-            line += String.valueOf(i+1) + "." +  taskList.get(i).toString() + "\n";
+        line += "Here are the tasks in your list: \n";
+        System.out.println(taskList.size());
+        for (int i = 0; i < this.taskList.size(); i++ ) {
+            line += String.valueOf(i+1) + "." +  this.taskList.get(i).toString() + "\n";
         }
         return line;
     }
@@ -86,9 +128,9 @@ public class TaskList {
      *
      */
     public String delete(Integer i) {
-        String stringy = taskList.get(i-1).toString();
-        taskList.remove(i - 1);
+        String stringy = this.taskList.get(i-1).toString();
+        this.taskList.remove(i - 1);
         return "Noted. I have removed the current task!" + stringy + "Now, you have " +
-                taskList.size() + " items in this list.";
+                this.taskList.size() + " items in this list.";
     }
 }
