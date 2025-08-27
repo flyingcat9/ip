@@ -1,10 +1,14 @@
+package task.specific;
+
+import task.Task;
+
 /**
  * This class represents an event. In other words, there is a
  * starting and an ending time.
  *
  * @author: Ong Li Min
  */
-public class Events extends Task{
+public class Events extends Task {
     String startingTime;
     String endingTime;
 

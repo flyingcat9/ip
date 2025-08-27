@@ -1,3 +1,5 @@
+package exceptions;
+
 /**
  * Error happens if the input is invalid.
  *

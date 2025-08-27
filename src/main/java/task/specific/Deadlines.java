@@ -1,9 +1,13 @@
+package task.specific;
+
+import task.Task;
+
 /**
  * This class is meant for tasks that have deadlines.
  *
  * @author Ong Li Min
  */
-public class Deadlines extends Task{
+public class Deadlines extends Task {
     String deadline;
 
     /**

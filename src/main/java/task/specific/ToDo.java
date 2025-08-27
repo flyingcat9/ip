@@ -1,8 +1,12 @@
+package task.specific;
+
+import task.Task;
+
 /**
  * This class represents a task that should be done.
  * @author: Ong Li Min
  */
-public class ToDo extends Task{
+public class ToDo extends Task {
 
     /**
      * Creating a new to do task.
@@ -13,7 +17,7 @@ public class ToDo extends Task{
     }
 
     /**
-     * Creating a new ToDo task
+     * Creating a new task.specific.ToDo task
      * @param description of task
      * @param finishType whether it is completed or not
      */

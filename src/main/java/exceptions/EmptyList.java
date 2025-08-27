@@ -1,3 +1,5 @@
+package exceptions;
+
 /**
  * Error if the list is empty.
  *

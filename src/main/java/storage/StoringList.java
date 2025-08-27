@@ -1,10 +1,16 @@
+package storage;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import task.Task;
+import task.specific.Deadlines;
+import task.specific.Events;
+import task.specific.ToDo;
 
 /**
  * In charge of loading and saving things in the file.
@@ -81,7 +87,7 @@ public class StoringList {
 
     /**
      * Storing the updated list into the .txt file
-     * @param t the ArrayList<Task> you are updating
+     * @param t the ArrayList<task.Task> you are updating
      */
 
     public void store(ArrayList<Task> t) {
