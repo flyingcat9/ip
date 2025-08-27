@@ -10,7 +10,12 @@ import java.util.Arrays;
 
 public class TaskList {
 
+    StoringList slist = new StoringList();
+    ArrayList<Task> taskList = slist.load();
 
+    /**
+     * Enum to split the different types of tasks.
+     */
     public enum TypesOfTasks{
         DEADLINE,
         TODO,
@@ -18,7 +23,11 @@ public class TaskList {
         INVALID
     }
 
-
+    /**
+     * Checks and validates type of task.
+     * @param s type of task to be added
+     * @return the task
+     */
     public TaskList.TypesOfTasks checkerOfCommand(String s) {
         for (TypesOfTasks c: TypesOfTasks.values()) {
             if (s.equalsIgnoreCase(c.name())) {
@@ -28,10 +37,6 @@ public class TaskList {
         return TypesOfTasks.INVALID;
     }
 
-    StoringList slist = new StoringList();
-    ArrayList<Task> taskList = slist.load();
-
-
 
     /**
      * This method adds a task to the taskList.
@@ -39,6 +44,7 @@ public class TaskList {
      * @return added: task
      */
     public String addToList(String s) throws InvalidInput, EmptyList {
+        this.taskList = slist.load();
         s = s.trim();
         String[] p = s.split("\\s+");
         String stringy = "Got it, I have added this to my list!\n";
@@ -90,6 +96,12 @@ public class TaskList {
         return stringy;
     }
 
+    /**
+     * Find string in an array of words
+     * @param array array of words
+     * @param term you are searching for
+     * @return the index of the word
+     */
     public int finder(String[] array, String term) {
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(term)) {
@@ -105,6 +117,7 @@ public class TaskList {
      * @return message
      */
     public String mark(Integer i) {
+        this.taskList = slist.load();
         taskList.get(i-1).mark();
         slist.store(this.taskList);
         return "Well done! I have marked this particular task as done: \n" + taskList.get(i-1).toString();
@@ -113,9 +126,10 @@ public class TaskList {
     /**
      * This method marks a task as incomplete
      * @param i this contains the integer of the arraylist marked
-     * @return message to uesr
+     * @return message to user
      */
     public String unmark(Integer i) {
+        this.taskList = slist.load();
         taskList.get(i-1).unMark();
         slist.store(this.taskList);
         return "Okay, I have marked this particular task as not done yet: \n" + taskList.get(i-1).toString();
@@ -138,8 +152,11 @@ public class TaskList {
     /**
      * This deletes an item from the list.
      *
+     * @param i index you are deleting
+     * @return String you are returning
      */
     public String delete(Integer i) {
+        this.taskList = slist.load();
         String stringy = this.taskList.get(i-1).toString();
         this.taskList.remove(i - 1);
         slist.store(this.taskList);

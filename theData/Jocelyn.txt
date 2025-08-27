@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 [ToDo] [O] [O] [O] [O] [X] eat list
 [ToDo] [O] [O] [O] [O] eat apple
 [D] [O] [O] [O] return book (by: Oct 15 2019)))
 [Events] [O] [O] eat cake (from: Oct 20 2018 to: Oct 20 2018))
 [Events] [O] life (from: Oct 20 2016 to: Oct 1 2020)
+=======
+[ToDo] [X] borrow book
+[Events] [O] play piano (from: 2020-10-20 to: 2020-10-21))))))
+>>>>>>> branch-Level-7

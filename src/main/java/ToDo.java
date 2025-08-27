@@ -13,6 +13,15 @@ public class ToDo extends Task{
     }
 
     /**
+     * Creating a new ToDo task
+     * @param description of task
+     * @param finishType whether it is completed or not
+     */
+    public ToDo(String description, boolean finishType) {
+        super(description, finishType);
+    }
+
+    /**
      * string
      * @return the string
      */

@@ -9,6 +9,7 @@ public class InvalidInput extends Exception {
 
     /**
      * Error for invalid input.
+     * @param message to be passed up
      */
     public InvalidInput(String e) {
         super(e);

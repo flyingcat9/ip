@@ -14,6 +14,10 @@ import java.util.Scanner;
 public class StoringList {
 
 
+    /**
+     * In charge of loading the file into the taskList.
+     * @return the updated ArrayList
+     */
     public ArrayList<Task> load() {
         File directory = new File("theData");
         ArrayList<Task> theList = new ArrayList<>();
@@ -34,20 +38,23 @@ public class StoringList {
                 String t = nextLiner.nextLine();
                 if (t.contains("[ToDo]")) {
                     String[] p = t.split(" ");
-                    theList.add(new ToDo(String.join(" ", Arrays.copyOfRange(p, 1, p.length))));
+                    boolean finished = p[1].equals("[O]") ? false : true;
+                    theList.add(new ToDo(String.join(" ", Arrays.copyOfRange(p, 2, p.length)), finished));
                 } else if (t.contains("[D]")) {
                     String[] p = t.split(" ");
                     int indexOfBy = this.finder(p, "(by:");
-                    theList.add(new Deadlines(String.join(" ", Arrays.copyOfRange(p, 1, indexOfBy)),
-                                String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length))));
+                    boolean finished = p[1].equals("[O]") ? false : true;
+                    theList.add(new Deadlines(String.join(" ", Arrays.copyOfRange(p, 2, indexOfBy)),
+                                String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length)), finished));
 
                 } else if (t.contains("[Events]")) {
                     String[] p = t.split(" ");
                     int indexOfFrom = this.finder(p, "(from:");
                     int indexOfTo = this.finder(p, "to:");
-                    theList.add(new Events(String.join(" ", Arrays.copyOfRange(p, 1, indexOfFrom)),
+                    boolean finished = p[1].equals("[O]") ? false : true;
+                    theList.add(new Events(String.join(" ", Arrays.copyOfRange(p, 2, indexOfFrom)),
                             String.join(" ", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo)),
-                            String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length))));
+                            String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length)), finished));
                 }
             }
         } catch(IOException ee){
@@ -57,6 +64,12 @@ public class StoringList {
 
     }
 
+    /**
+     * Finds the string in the array
+     * @param array array of words
+     * @param term word you are looking for
+     * @return index of the string
+     */
     public int finder(String[] array, String term) {
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(term)) {
@@ -67,8 +80,10 @@ public class StoringList {
     }
 
 
-
-
+    /**
+     * Storing the updated list into the .txt file
+     * @param t the ArrayList<Task> you are updating
+     */
 
     public void store(ArrayList<Task> t) {
         try {
@@ -76,7 +91,7 @@ public class StoringList {
             File theFinalFile = new File(directory, "Jocelyn.txt");
             FileWriter a = new FileWriter(theFinalFile, false);
             for (Task theTask : t) {
-                a.append(theTask.toString() + "\n");
+                a.write(theTask.toString() + "\n");
             }
             a.close();
         } catch (IOException e) {

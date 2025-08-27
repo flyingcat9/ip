@@ -20,6 +20,13 @@ public class Events extends Task{
         this.endingTime = eT;
     }
 
+
+    public Events(String description, String sT, String eT, boolean finishResult) {
+        super(description, finishResult);
+        this.startingTime = sT;
+        this.endingTime = eT;
+    }
+
     /**
      * returns a string
      * @return string of the event
