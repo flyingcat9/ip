@@ -56,7 +56,8 @@ public class TaskList {
                 if (p.length > 1 && Arrays.asList(p).contains("/by")) {
                     int indexOfBy = this.finder(p, "/by");
                     String task  = String.join(" ", Arrays.copyOfRange(p, 1, indexOfBy));
-                    String d = String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length));
+                    DateConverter de = new DateConverter(String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length)));
+                    String d = de.toString();
                     Task deadline = new Deadlines(task, d);
                     taskList.add(deadline);
                     stringy += deadline.toString();
@@ -70,8 +71,12 @@ public class TaskList {
                     int indexOfTo = this.finder(p, "/to");
                     String description = String.join(" ", Arrays.copyOfRange(p, 1, indexOfFrom));
                     String startingTime = String.join(" ", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo));
+                    DateConverter st = new DateConverter(startingTime);
+                    String stringStartingTime = st.toString();
                     String endingTime = String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length));
-                    Task event = new Events(description, startingTime, endingTime);
+                    DateConverter en = new DateConverter(endingTime);
+                    String stringEndingTime = en.toString();
+                    Task event = new Events(description, stringStartingTime, stringEndingTime);
                     taskList.add(event);
                     stringy += event.toString();
                 } else {
