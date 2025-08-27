@@ -23,10 +23,14 @@ public class DateConverter{
         }
     }
 
+<<<<<<< HEAD
     /**
      * Returns the error message
      * @return the string formatted
      */
+=======
+
+>>>>>>> branch-A-CodingStandard
     public String toString() {
         return this.date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
 

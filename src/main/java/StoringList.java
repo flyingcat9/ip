@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class StoringList {
 
-
     /**
      * In charge of loading the file into the taskList.
      * @return the updated ArrayList
