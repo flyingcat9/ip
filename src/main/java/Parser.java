@@ -15,6 +15,7 @@ public class Parser {
         MARK,
         UNMARK,
         DELETE,
+        FIND,
         INVALID
     }
 
@@ -58,6 +59,9 @@ public class Parser {
                 break;
             case DELETE:
                 t += e.delete(Integer.parseInt(p[1]));
+                break;
+            case FIND:
+                t += e.find(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
                 break;
             default:
                 t += e.addToList(s);
