@@ -32,7 +32,7 @@ public class Task {
      */
     public String getProgressStatus() {
         if (progressStatus.equals(false)) {
-            return " ";
+            return "O";
         }
         return "X";
     }
@@ -56,7 +56,7 @@ public class Task {
      * @return nicely formatted String
      */
     public String toString() {
-        return "[" + this.getProgressStatus() + "] " + this.descript;
+        return " [" + this.getProgressStatus() + "] " + this.descript;
     }
 
 

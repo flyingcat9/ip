@@ -14,7 +14,7 @@ public class Jocelyn {
      */
     public static void main(String[] args) {
         StoringList a = new StoringList();
-        System.out.println(a.load());
+        a.load();
         UserInput u = new UserInput();
         UserInput.starting();
     }

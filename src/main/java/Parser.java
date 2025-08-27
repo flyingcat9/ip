@@ -27,7 +27,7 @@ public class Parser {
      */
 
     public static String validityOfWords(String s, TaskList e) throws InvalidInput, EmptyList {
-        s = s.toLowerCase().trim();
+        s = s.trim();
         String t = "";
         String[] p = s.split("\\s+");
         Parser pa = new Parser();

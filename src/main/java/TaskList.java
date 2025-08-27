@@ -28,8 +28,9 @@ public class TaskList {
         return TypesOfTasks.INVALID;
     }
 
-    ArrayList<Task> taskList = new ArrayList<>();
     StoringList slist = new StoringList();
+    ArrayList<Task> taskList = slist.load();
+
 
 
     /**
@@ -38,13 +39,13 @@ public class TaskList {
      * @return added: task
      */
     public String addToList(String s) throws InvalidInput, EmptyList {
-        s = s.toLowerCase().trim();
+        s = s.trim();
         String[] p = s.split("\\s+");
-        String stringy = "Got it, I have added this to my list!\n ";
+        String stringy = "Got it, I have added this to my list!\n";
         switch(this.checkerOfCommand(p[0])) {
             case TODO:
                 if (p.length > 1) {
-                    Task todo = new ToDo(String.join("", Arrays.copyOfRange(p, 1, p.length)));
+                    Task todo = new ToDo(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
                     taskList.add(todo);
                     stringy += todo.toString();
                 } else {
@@ -54,8 +55,9 @@ public class TaskList {
             case DEADLINE:
                 if (p.length > 1 && Arrays.asList(p).contains("/by")) {
                     int indexOfBy = this.finder(p, "/by");
-                    String task  = String.join("", Arrays.copyOfRange(p, 1, indexOfBy));
-                    String d = String.join("", Arrays.copyOfRange(p, indexOfBy, p.length - 1));
+                    String task  = String.join(" ", Arrays.copyOfRange(p, 1, indexOfBy));
+                    DateConverter de = new DateConverter(String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length)));
+                    String d = de.toString();
                     Task deadline = new Deadlines(task, d);
                     taskList.add(deadline);
                     stringy += deadline.toString();
@@ -67,16 +69,22 @@ public class TaskList {
                 if (p.length > 1 && Arrays.asList(p).contains("/from") && Arrays.asList(p).contains("/to")) {
                     int indexOfFrom = this.finder(p, "/from");
                     int indexOfTo = this.finder(p, "/to");
-                    String description = String.join("", Arrays.copyOfRange(p, 1, indexOfFrom));
-                    String startingTime = String.join("", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo));
-                    String endingTime = String.join("", Arrays.copyOfRange(p, indexOfTo + 1, p.length - 1));
-                    Task event = new Events(description, startingTime, endingTime);
+                    String description = String.join(" ", Arrays.copyOfRange(p, 1, indexOfFrom));
+                    String startingTime = String.join(" ", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo));
+                    DateConverter st = new DateConverter(startingTime);
+                    String stringStartingTime = st.toString();
+                    String endingTime = String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length));
+                    DateConverter en = new DateConverter(endingTime);
+                    String stringEndingTime = en.toString();
+                    Task event = new Events(description, stringStartingTime, stringEndingTime);
                     taskList.add(event);
                     stringy += event.toString();
                 } else {
                     throw new InvalidInput("invalid input");
                 }
                 break;
+            case INVALID:
+                throw new InvalidInput("command not recognized");
         }
         slist.store(this.taskList);
         return stringy;
@@ -98,6 +106,7 @@ public class TaskList {
      */
     public String mark(Integer i) {
         taskList.get(i-1).mark();
+        slist.store(this.taskList);
         return "Well done! I have marked this particular task as done: \n" + taskList.get(i-1).toString();
     }
 
@@ -108,6 +117,7 @@ public class TaskList {
      */
     public String unmark(Integer i) {
         taskList.get(i-1).unMark();
+        slist.store(this.taskList);
         return "Okay, I have marked this particular task as not done yet: \n" + taskList.get(i-1).toString();
     }
 
@@ -116,9 +126,9 @@ public class TaskList {
      * @return the list printed out and formatted nicely.
      */
     public String printList() {
+        this.taskList = slist.load();
         String line = "";
         line += "Here are the tasks in your list: \n";
-        System.out.println(taskList.size());
         for (int i = 0; i < this.taskList.size(); i++ ) {
             line += String.valueOf(i+1) + "." +  this.taskList.get(i).toString() + "\n";
         }
@@ -132,6 +142,7 @@ public class TaskList {
     public String delete(Integer i) {
         String stringy = this.taskList.get(i-1).toString();
         this.taskList.remove(i - 1);
+        slist.store(this.taskList);
         return "Noted. I have removed the current task!" + stringy + "Now, you have " +
                 this.taskList.size() + " items in this list.";
     }

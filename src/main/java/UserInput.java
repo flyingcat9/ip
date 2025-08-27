@@ -49,7 +49,7 @@ public class UserInput {
     }
 
     public boolean exitingTheLoop(String input) {
-        if (input == null || input == "" || input == "bye") {
+        if (input == null || input.equals("") || input.equals("bye")) {
             return true;
         }
         return false;

@@ -11,6 +11,6 @@ public class InvalidInput extends Exception {
      * Error for invalid input.
      */
     public InvalidInput(String e) {
-        super(e + " is invalid.");
+        super(e);
     }
 }
