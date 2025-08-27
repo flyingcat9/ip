@@ -37,15 +37,15 @@ public class StoringList {
                     theList.add(new ToDo(String.join(" ", Arrays.copyOfRange(p, 1, p.length))));
                 } else if (t.contains("[D]")) {
                     String[] p = t.split(" ");
-                    int indexOfBy = this.finder(p, "by");
-                    theList.add(new Deadlines(String.join(" ", Arrays.copyOfRange(p, 0, indexOfBy)),
+                    int indexOfBy = this.finder(p, "(by:");
+                    theList.add(new Deadlines(String.join(" ", Arrays.copyOfRange(p, 1, indexOfBy)),
                                 String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length))));
 
                 } else if (t.contains("[Events]")) {
                     String[] p = t.split(" ");
                     int indexOfFrom = this.finder(p, "(from:");
                     int indexOfTo = this.finder(p, "to:");
-                    theList.add(new Events(String.join(" ", Arrays.copyOfRange(p, 0, indexOfFrom)),
+                    theList.add(new Events(String.join(" ", Arrays.copyOfRange(p, 1, indexOfFrom)),
                             String.join(" ", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo)),
                             String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length))));
                 }
@@ -74,7 +74,7 @@ public class StoringList {
         try {
             File directory = new File("theData");
             File theFinalFile = new File(directory, "Jocelyn.txt");
-            FileWriter a = new FileWriter(theFinalFile, true);
+            FileWriter a = new FileWriter(theFinalFile, false);
             for (Task theTask : t) {
                 a.append(theTask.toString() + "\n");
             }

@@ -78,6 +78,8 @@ public class TaskList {
                     throw new InvalidInput("invalid input");
                 }
                 break;
+            case INVALID:
+                throw new InvalidInput("command not recognized");
         }
         slist.store(this.taskList);
         return stringy;
@@ -99,6 +101,7 @@ public class TaskList {
      */
     public String mark(Integer i) {
         taskList.get(i-1).mark();
+        slist.store(this.taskList);
         return "Well done! I have marked this particular task as done: \n" + taskList.get(i-1).toString();
     }
 
@@ -109,6 +112,7 @@ public class TaskList {
      */
     public String unmark(Integer i) {
         taskList.get(i-1).unMark();
+        slist.store(this.taskList);
         return "Okay, I have marked this particular task as not done yet: \n" + taskList.get(i-1).toString();
     }
 
@@ -117,6 +121,7 @@ public class TaskList {
      * @return the list printed out and formatted nicely.
      */
     public String printList() {
+        this.taskList = slist.load();
         String line = "";
         line += "Here are the tasks in your list: \n";
         for (int i = 0; i < this.taskList.size(); i++ ) {
@@ -132,6 +137,7 @@ public class TaskList {
     public String delete(Integer i) {
         String stringy = this.taskList.get(i-1).toString();
         this.taskList.remove(i - 1);
+        slist.store(this.taskList);
         return "Noted. I have removed the current task!" + stringy + "Now, you have " +
                 this.taskList.size() + " items in this list.";
     }
