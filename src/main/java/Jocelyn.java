@@ -13,6 +13,8 @@ public class Jocelyn {
      * @param args the main method
      */
     public static void main(String[] args) {
+        StoringList a = new StoringList();
+        System.out.println(a.load());
         UserInput u = new UserInput();
         UserInput.starting();
     }
