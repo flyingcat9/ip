@@ -1,3 +1,5 @@
+package exceptions;
+
 /**
  * Error run if the user does not provide a deadline.
  */

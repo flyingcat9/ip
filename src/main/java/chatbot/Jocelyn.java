@@ -1,10 +1,13 @@
+package chatbot;
+
+import storage.StoringList;
+import userinteraction.UserInput;
+
 /**
  * This is the main method of the ChatBot.
  *
  * @author: Ong Li Min
  */
-
-import java.util.Scanner;
 
 public class Jocelyn {
 
@@ -13,7 +16,7 @@ public class Jocelyn {
      * @param args the main method
      */
     public static void main(String[] args) {
-        StoringList a = new StoringList();
+        StoringList a = new StoringList();lis
         a.load();
         UserInput u = new UserInput();
         UserInput.starting();

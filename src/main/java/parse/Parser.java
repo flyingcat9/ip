@@ -1,4 +1,10 @@
+package parse;
+
 import java.util.Arrays;
+
+import exceptions.EmptyList;
+import exceptions.InvalidInput;
+import storetasks.TaskList;
 
 /**
  * Class in charge of validating the user commands
