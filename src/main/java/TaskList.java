@@ -29,6 +29,7 @@ public class TaskList {
     }
 
     ArrayList<Task> taskList = new ArrayList<>();
+    StoringList slist = new StoringList();
 
 
     /**
@@ -77,6 +78,7 @@ public class TaskList {
                 }
                 break;
         }
+        slist.store(this.taskList);
         return stringy;
     }
 
