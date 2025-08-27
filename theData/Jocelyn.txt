@@ -1,2 +1,2 @@
-[ToDo] [O] [X] eat list
-[ToDo] [O] eat apple
+[ToDo] [X] borrow book
+[Events] [O] play piano (from: 2020-10-20 to: 2020-10-21))))))

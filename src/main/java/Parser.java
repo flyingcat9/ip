@@ -1,6 +1,15 @@
 import java.util.Arrays;
 
+/**
+ * Class in charge of validating the user commands
+ *
+ * @author Ong Li Min
+ */
 public class Parser {
+
+    /**
+     * Enum class in charge of splitting the different commands.
+     */
     public enum Commands {
         LIST,
         MARK,
@@ -9,7 +18,12 @@ public class Parser {
         INVALID
     }
 
-    public Commands checkerOfCommand(String s) {
+    /**
+     * Checks the command to see if it matches any of the above enums
+     * @param s command
+     * @return Commands appropriate command it correlates with
+     */
+     public Commands checkerOfCommand(String s) {
         for (Commands c : Commands.values()) {
             if (s.equalsIgnoreCase(c.name())) {
                 return c;
@@ -25,7 +39,6 @@ public class Parser {
      * @param e the echo they have
      * @return formatted String
      */
-
     public static String validityOfWords(String s, TaskList e) throws InvalidInput, EmptyList {
         s = s.trim();
         String t = "";
@@ -50,8 +63,6 @@ public class Parser {
                 t += e.addToList(s);
 
         }
-
         return t;
-
     }
 }

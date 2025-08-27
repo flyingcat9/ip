@@ -40,14 +40,27 @@ public class UserInput {
         System.out.println(uI.ending());
     }
 
+    /**
+     * greets the user
+     * @return string greeting the user
+     */
     public String greet() {
         return "Hello! I'm Jocelyn. What can I do for you?";
     }
 
+    /**
+     * ending message if user says "bye"
+     * @return goodbye message
+     */
     public String ending() {
         return "Bye, I hope to see you soon!";
     }
 
+    /**
+     * checker to see when the input loop stops
+     * @param input input from user
+     * @return whether it is time to stop the loop
+     */
     public boolean exitingTheLoop(String input) {
         if (input == null || input.equals("") || input.equals("bye")) {
             return true;
