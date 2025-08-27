@@ -1,6 +1,16 @@
+/**
+ * Error happens if the input is invalid.
+ *
+ * @author Ong Li Min
+ */
+
 public class InvalidInput extends Exception {
     protected String message;
-    public InvalidInput() {
-        super("Input is invalid.");
+
+    /**
+     * Error for invalid input.
+     */
+    public InvalidInput(String e) {
+        super(e + " is invalid.");
     }
 }

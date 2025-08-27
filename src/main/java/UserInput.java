@@ -8,6 +8,11 @@ import java.util.Scanner;
  * @author Ong Li Min
  */
 
+/** just create the scanner once.
+ * normalize input
+ * split into more functions
+ */
+
 public class UserInput {
 
     /**
@@ -15,51 +20,42 @@ public class UserInput {
      * phrases from the chatbot.
      */
     public static void starting() {
-        System.out.println("Hello! I'm Jocelyn. What can I do for you?");
+        UserInput uI = new UserInput();
         Scanner object = new Scanner(System.in);
+        System.out.println(uI.greet());
         String userWords = object.nextLine();
         TaskList text = new TaskList();
-        while (!userWords.equals("bye")) {
-            System.out.print(validityOfWords(userWords, text));
-            object = new Scanner(System.in);
+        Parser i = new Parser();
+        while (!uI.exitingTheLoop(userWords)) {
             try {
-                userWords = object.nextLine();
-            } catch (NoSuchElementException error) {
-                System.out.println(error);
+                String s = i.validityOfWords(userWords, text);
+                System.out.println(s);
+            } catch (InvalidInput e) {
+                System.out.println(e);
+            } catch (EmptyList t) {
+                System.out.println(t);
             }
+            userWords = object.nextLine();
         }
-        System.out.println("Bye, I hope to see you soon!");
+        System.out.println(uI.ending());
     }
 
-    /**
-     * This function checks to see what the user wants to do.
-     *
-     * @param s user's message
-     * @param e the echo they have
-     * @return formatted String
-     */
-    public static String validityOfWords(String s, TaskList e) {
-        String t = "";
-        if (s.equals("list")) {
-            t += "Here are the tasks in your list: \n";
-            t += e.printList();
-        } else if (s.contains("unmark")) {
-            t += e.unmark(Integer.valueOf(s.substring(7))) + "\n";
-        } else if (s.contains("mark")) {
-            t += e.mark(Integer.valueOf(s.substring(5))) + "\n";
-        } else if (s.contains("delete")) {
-            t += e.delete(Integer.valueOf(s.substring(s.indexOf("delete") + 7))) + "\n";
-        }else {
-            try {
-                t += e.addToList(s);
-            } catch (InvalidInput error) {
-                System.out.println(error);
-            } catch (EmptyList ee) {
-                System.out.println(ee);
-            }
-        }
-        return t;
+    public String greet() {
+        return "Hello! I'm Jocelyn. What can I do for you?";
     }
+
+    public String ending() {
+        return "Bye, I hope to see you soon!";
+    }
+
+    public boolean exitingTheLoop(String input) {
+        if (input == null || input == "" || input == "bye") {
+            return true;
+        }
+        return false;
+    }
+
+
 }
 
 
