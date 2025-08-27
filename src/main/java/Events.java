@@ -32,6 +32,7 @@ public class Events extends Task{
      * @return string of the event
      */
     public String toString() {
-        return "[Events]" + super.toString() + " (from: " + startingTime + " to: " + endingTime + ")";
+        return "[Events]" + super.toString() +
+                " (from: " + startingTime + " to: " + endingTime + ")";
     }
 }

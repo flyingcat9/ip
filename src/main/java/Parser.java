@@ -11,11 +11,11 @@ public class Parser {
      * Enum class in charge of splitting the different commands.
      */
     public enum Commands {
-        LIST,
-        MARK,
-        UNMARK,
-        DELETE,
-        INVALID
+        List,
+        Mark,
+        Unmark,
+        Delete,
+        Invalid
     }
 
     /**
@@ -29,7 +29,7 @@ public class Parser {
                 return c;
             }
         }
-        return Commands.INVALID;
+        return Commands.Invalid;
     }
 
     /**
@@ -46,17 +46,17 @@ public class Parser {
         Parser pa = new Parser();
         Commands command = pa.checkerOfCommand(p[0].toLowerCase());
         switch (command) {
-            case LIST:
+            case List:
                 t += e.printList();
                 break;
-            case UNMARK:
+            case Unmark:
                 // need a try-catch if list isn't that long
                 t += e.unmark(Integer.parseInt(p[1]));
                 break;
-            case MARK:
+            case Mark:
                 t += e.mark(Integer.parseInt(p[1]));
                 break;
-            case DELETE:
+            case Delete:
                 t += e.delete(Integer.parseInt(p[1]));
                 break;
             default:
