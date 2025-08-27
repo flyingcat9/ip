@@ -90,15 +90,8 @@ public class TaskList {
                             Arrays.copyOfRange(p, indexOfTo + 1, p.length));
                     DateConverter en = new DateConverter(endingTime);
                     String stringEndingTime = en.toString();
-<<<<<<< HEAD
-                    Task event = new Events(description, stringStartingTime, stringEndingTime);
-<<<<<<< HEAD
-=======
                     Task event = new Events(description,
                             stringStartingTime, stringEndingTime);
->>>>>>> branch-A-CodingStandard
-=======
->>>>>>> branch-Level-9
                     taskList.add(event);
                     stringy += event.toString();
                 } else {

@@ -11,20 +11,12 @@ public class Parser {
      * Enum class in charge of splitting the different commands.
      */
     public enum Commands {
-<<<<<<< HEAD
         List,
         Mark,
         Unmark,
         Delete,
-        Invalid
-=======
-        LIST,
-        MARK,
-        UNMARK,
-        DELETE,
-        FIND,
-        INVALID
->>>>>>> branch-Level-9
+        Invalid,
+        Find
     }
 
     /**
@@ -68,7 +60,7 @@ public class Parser {
             case Delete:
                 t += e.delete(Integer.parseInt(p[1]));
                 break;
-            case FIND:
+            case Find:
                 t += e.find(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
                 break;
             default:

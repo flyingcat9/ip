@@ -2,5 +2,6 @@
 [ToDo] [O] read book!
 [ToDo] [O] return book /by 2025-06-06
 [ToDo] [O] eq pizza!
-[D] [O] return book (by: Jun 6 2025))
-[Events] [O] eat apples (from: Aug 27 2025 to: Aug 29 2025)
+[D] [O] return book (by: Jun 6 2025)))
+[Events] [O] eat apples (from: Aug 27 2025 to: Aug 29 2025))
+[ToDo] [O] eat banana
