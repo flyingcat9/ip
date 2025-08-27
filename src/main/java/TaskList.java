@@ -92,10 +92,13 @@ public class TaskList {
                     String stringEndingTime = en.toString();
 <<<<<<< HEAD
                     Task event = new Events(description, stringStartingTime, stringEndingTime);
+<<<<<<< HEAD
 =======
                     Task event = new Events(description,
                             stringStartingTime, stringEndingTime);
 >>>>>>> branch-A-CodingStandard
+=======
+>>>>>>> branch-Level-9
                     taskList.add(event);
                     stringy += event.toString();
                 } else {
@@ -177,5 +180,21 @@ public class TaskList {
         slist.store(this.taskList);
         return "Noted. I have removed the current task!" + stringy + "Now, you have " +
                 this.taskList.size() + " items in this list.";
+    }
+
+    /**
+     * Finds the string required throughout the tasks
+     * @param s string to be found
+     * @return all strings that match
+     */
+    public String find(String s) {
+        this.taskList = slist.load();
+        String ongoingString = "";
+        for (int i = 0; i < taskList.size(); i++ ) {
+            if (taskList.get(i).toString().contains(s)) {
+                ongoingString += taskList.get(i).toString() + "\n";
+            }
+        }
+        return ongoingString;
     }
 }
