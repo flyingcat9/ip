@@ -21,6 +21,13 @@ public class Events extends Task{
     }
 
 
+    /**
+     * Another constructor for the events
+     * @param description description of the task
+     * @param sT starting time
+     * @param eT ending time
+     * @param finishResult of whether it has been completed or not
+     */
     public Events(String description, String sT, String eT, boolean finishResult) {
         super(description, finishResult);
         this.startingTime = sT;
