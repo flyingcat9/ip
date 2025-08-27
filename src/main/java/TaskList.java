@@ -77,7 +77,7 @@ public class TaskList {
                     DateConverter en = new DateConverter(endingTime);
                     String stringEndingTime = en.toString();
                     Task event = new Events(description, stringStartingTime, stringEndingTime);
-                    taskList.add(event);
+                    taskList.add(event);i
                     stringy += event.toString();
                 } else {
                     throw new InvalidInput("invalid input");
