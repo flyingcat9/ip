@@ -47,15 +47,15 @@ public class StoringList {
                     theList.add(new ToDo(String.join(" ", Arrays.copyOfRange(p, 2, p.length)), finished));
                 } else if (t.contains("[D]")) {
                     String[] p = t.split(" ");
-                    int indexOfBy = this.finder(p, "(by:");
+                    int indexOfBy = this.finder("(by:", p);
                     boolean finished = p[1].equals("[O]") ? false : true;
                     theList.add(new Deadlines(String.join(" ", Arrays.copyOfRange(p, 2, indexOfBy)),
                                 String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length)), finished));
 
                 } else if (t.contains("[Events]")) {
                     String[] p = t.split(" ");
-                    int indexOfFrom = this.finder(p, "(from:");
-                    int indexOfTo = this.finder(p, "to:");
+                    int indexOfFrom = this.finder("(from:", p);
+                    int indexOfTo = this.finder("to:", p);
                     boolean finished = p[1].equals("[O]") ? false : true;
                     theList.add(new Events(String.join(" ", Arrays.copyOfRange(p, 2, indexOfFrom)),
                             String.join(" ", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo)),
@@ -70,12 +70,12 @@ public class StoringList {
     }
 
     /**
-     * Finds the string in the array
+     * Finds the string in the array, used varags in params
      * @param array array of words
-     * @param term word you are looking for
+     * @param term the word you are looking for
      * @return index of the string
      */
-    public int finder(String[] array, String term) {
+    public int finder(String term, String ... array) {
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(term)) {
                 return i;
