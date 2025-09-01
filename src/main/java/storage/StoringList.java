@@ -1,9 +1,9 @@
 package storage;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -62,8 +62,8 @@ public class StoringList {
                             String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length)), finished));
                 }
             }
-        } catch(IOException ee){
-                System.out.println(ee.getMessage());
+        } catch (IOException ee) {
+            System.out.println(ee.getMessage());
         }
         return theList;
 
@@ -87,9 +87,8 @@ public class StoringList {
 
     /**
      * Storing the updated list into the .txt file
-     * @param t the ArrayList<task.Task> you are updating
+     * @param t the ArrayList you are updating
      */
-
     public void store(ArrayList<Task> t) {
         try {
             File directory = new File("theData");
@@ -100,8 +99,8 @@ public class StoringList {
             }
             a.close();
         } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            System.out.println(e.getMessage());
+        }
 
     }
 }

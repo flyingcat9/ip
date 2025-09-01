@@ -14,11 +14,6 @@ import storetasks.TaskList;
  * @author Ong Li Min
  */
 
-/** just create the scanner once.
- * normalize input
- * split into more functions
- */
-
 public class UserInput {
 
     /**

@@ -1,3 +1,2 @@
-[ToDo] [O] eat potatoes
-[D] [X] eat potatoes (by: Jun 6 2025)))))
-[Events] [O] play (from: Aug 20 2025 to: Aug 25 2025)))
+[ToDo] [X] eat potatoes
+[D] [O] eat breakfast (by: Jan 20 2020))))

@@ -8,7 +8,7 @@ import task.Task;
  * @author Ong Li Min
  */
 public class Deadlines extends Task {
-    String deadline;
+    private String deadline;
 
     /**
      * Creating a new Deadline
@@ -37,5 +37,9 @@ public class Deadlines extends Task {
      */
     public String toString() {
         return "[D]" + super.toString() + " (by: " + deadline + ")";
+    }
+
+    public String getDeadline() {
+        return this.deadline;
     }
 }

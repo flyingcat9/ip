@@ -9,8 +9,8 @@ import task.Task;
  * @author: Ong Li Min
  */
 public class Events extends Task {
-    String startingTime;
-    String endingTime;
+    private String startingTime;
+    private String endingTime;
 
     /**
      * Creating an event.
@@ -23,7 +23,6 @@ public class Events extends Task {
         this.startingTime = sT;
         this.endingTime = eT;
     }
-
 
     /**
      * Another constructor for the events
@@ -38,12 +37,23 @@ public class Events extends Task {
         this.endingTime = eT;
     }
 
+    public String getEndingTime() {
+        return this.endingTime;
+    }
+
+    public String getStaringTime() {
+        return this.startingTime;
+    }
+
+
+
+
     /**
      * returns a string
      * @return string of the event
      */
     public String toString() {
-        return "[Events]" + super.toString() +
-                " (from: " + startingTime + " to: " + endingTime + ")";
+        return "[Events]" + super.toString()
+                + " (from: " + startingTime + " to: " + endingTime + ")";
     }
 }

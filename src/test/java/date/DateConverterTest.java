@@ -1,8 +1,7 @@
-package Date;
+package date;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DateConverterTest {
 
@@ -26,6 +25,4 @@ public class DateConverterTest {
         String actual = t.toString();
         assertEquals("Oct 20 2027", actual);
     }
-
-
 }

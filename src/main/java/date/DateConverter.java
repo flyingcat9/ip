@@ -1,4 +1,4 @@
-package Date;
+package date;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,7 +7,7 @@ import java.time.format.DateTimeParseException;
 /**
  * Class meant to convert the date into a better format.
  */
-public class DateConverter{
+public class DateConverter {
 
     protected LocalDate date;
 

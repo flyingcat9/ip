@@ -30,7 +30,7 @@ public class Parser {
      * @param s command
      * @return Commands appropriate command it correlates with
      */
-     public Commands checkerOfCommand(String s) {
+    public Commands checkerOfCommand(String s) {
         for (Commands c : Commands.values()) {
             if (s.equalsIgnoreCase(c.name())) {
                 return c;
@@ -53,24 +53,24 @@ public class Parser {
         Parser pa = new Parser();
         Commands command = pa.checkerOfCommand(p[0].toLowerCase());
         switch (command) {
-            case List:
-                t += e.printList();
-                break;
-            case Unmark:
-                // need a try-catch if list isn't that long
-                t += e.unmark(Integer.parseInt(p[1]));
-                break;
-            case Mark:
-                t += e.mark(Integer.parseInt(p[1]));
-                break;
-            case Delete:
-                t += e.delete(Integer.parseInt(p[1]));
-                break;
-            case Find:
-                t += e.find(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
-                break;
-            default:
-                t += e.addToList(s);
+        case List:
+            t += e.printList();
+            break;
+        case Unmark:
+            // need a try-catch if list isn't that long
+            t += e.unmark(Integer.parseInt(p[1]));
+            break;
+        case Mark:
+            t += e.mark(Integer.parseInt(p[1]));
+            break;
+        case Delete:
+            t += e.delete(Integer.parseInt(p[1]));
+            break;
+        case Find:
+            t += e.find(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
+            break;
+        default:
+            t += e.addToList(s);
 
         }
         return t;
