@@ -1,3 +1,3 @@
-[ToDo] [X] eat potatoes
-[D] [X] eat breakfast (by: Jan 20 2020))))))
 [ToDo] [O] eat tomatoes
+[ToDo] [O] eat potatoes
+[ToDo] [O] eat potatoes and tomatoes

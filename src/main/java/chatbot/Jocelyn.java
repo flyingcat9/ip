@@ -13,7 +13,6 @@ public class Jocelyn {
 
     /**
      * Main chat bot.
-     * @param args the main method
      */
     public static void main(String[] args) {
         StoringList a = new StoringList();
