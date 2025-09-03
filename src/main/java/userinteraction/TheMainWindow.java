@@ -64,12 +64,12 @@ public class TheMainWindow extends AnchorPane {
         String input = userInput.getText();
         Parser i = new Parser();
         TaskList text = new TaskList();
+        UserInput it = new UserInput();
         try {
             String response = i.validityOfWords(input, text);
             dialogContainer.getChildren().addAll(
-                    DialogChatBox.getUserDialog(input, userImage),
-                    DialogChatBox.getDukeDialog(response, jocelynImage)
-            );
+                        DialogChatBox.getUserDialog(input, userImage),
+                        DialogChatBox.getDukeDialog(response, jocelynImage));
             userInput.clear();
         } catch (InvalidInput e) {
             System.out.println(e.getMessage());
@@ -77,4 +77,17 @@ public class TheMainWindow extends AnchorPane {
             System.out.println(ee.getMessage());
         }
     }
+
+    /**
+     * checker to see when the input loop stops
+     * @param input input from user
+     * @return whether it is time to stop the loop
+     */
+    public boolean exitingTheLoop(String input) {
+        if (input == null || input.equals("") || input.equals("bye")) {
+            return true;
+        }
+        return false;
+    }
+
 }

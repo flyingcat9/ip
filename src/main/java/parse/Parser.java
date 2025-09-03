@@ -22,7 +22,11 @@ public class Parser {
         Unmark,
         Delete,
         Invalid,
-        Find
+        Find,
+        Bye,
+        ToDo,
+        Event,
+        Deadline
     }
 
     /**
@@ -68,6 +72,12 @@ public class Parser {
             break;
         case Find:
             t += e.find(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
+            break;
+        case Bye:
+            t += "BYEBYEBYE";
+            break;
+        case Invalid:
+            t += "Invalid Command";
             break;
         default:
             t += e.addToList(s);

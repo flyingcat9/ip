@@ -1,3 +1,6 @@
-[ToDo] [O] eat tomatoes
-[ToDo] [O] eat potatoes
-[ToDo] [O] eat potatoes and tomatoes
+[ToDo] [X] eat tomatoes
+[ToDo] [X] eat potatoes
+[ToDo] [X] eat potatoes and tomatoes
+[ToDo] [O] eat
+[ToDo] [O] eat
+[D] [O] sleep (by: Jun 4 2025)
