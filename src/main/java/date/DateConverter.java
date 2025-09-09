@@ -4,8 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import exceptions.InvalidDateInput;
+
 /**
  * Class meant to convert the date into a better format.
+ *
+ * Okay for now.
  */
 public class DateConverter {
 
@@ -16,11 +20,11 @@ public class DateConverter {
      * Constructor to create a new date.
      * @param date date that is meant to be converted.
      */
-    public DateConverter(String date) {
+    public DateConverter(String date) throws InvalidDateInput {
         try {
             this.date = LocalDate.parse(date);
         } catch (DateTimeParseException e) {
-            System.out.println("Please format your date properly");
+            throw new InvalidDateInput();
         }
     }
 

@@ -6,16 +6,14 @@ package exceptions;
  * @author Ong Li Min
  */
 
-public class EmptyList extends Exception {
+public class CannotStore extends Exception {
     protected String message;
 
     /**
      * Constructor for an empty list.
      *
      */
-    public EmptyList() {
-        super("The list is empty, you can not "
-                + "delete anything currently");
+    public CannotStore() {
+        super("Unable to store content.");
     }
 }
-

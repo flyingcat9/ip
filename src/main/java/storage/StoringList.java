@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
+import exceptions.CannotLoad;
+import exceptions.CannotStore;
 import task.Task;
 import task.specific.Deadlines;
 import task.specific.Events;
@@ -22,10 +23,20 @@ public class StoringList {
     /**
      * In charge of loading the file into the taskList.
      * @return the updated ArrayList
+     *
+     * Used ChatGPT for ideas on how to better encode the file ie: using || instead
+     * of only spaces in order to refactor my code.
+     *
+     * NTS: somehow include varags into the program also
+     *
+     * Example: [Deadline] "" [X] "" eat apples "" chairs
+     * Example: [ToDo] "" [X] "" eat trees
+     * Example: [Events] "" [X] "" eat a "" 2025-04-03 "" 2025-04-03
      */
-    public ArrayList<Task> load() {
+    public ArrayList<Task> load() throws CannotLoad {
         File directory = new File("theData");
         ArrayList<Task> theList = new ArrayList<>();
+        // make directory if it does not exist
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -41,61 +52,38 @@ public class StoringList {
             Scanner nextLiner = new Scanner(theFile);
             while (nextLiner.hasNextLine()) {
                 String t = nextLiner.nextLine();
-                if (t.contains("[ToDo]")) {
-                    String[] p = t.split(" ");
-                    boolean finished = p[1].equals("[O]") ? false : true;
-                    theList.add(new ToDo(String.join(" ", Arrays.copyOfRange(p, 2, p.length)), finished));
-                } else if (t.contains("[D]")) {
-                    String[] p = t.split(" ");
-                    int indexOfBy = this.finder("(by:", p);
-                    boolean finished = p[1].equals("[O]") ? false : true;
-                    theList.add(new Deadlines(String.join(" ", Arrays.copyOfRange(p, 2, indexOfBy)),
-                                String.join(" ", Arrays.copyOfRange(p, indexOfBy + 1, p.length)), finished));
-
-                } else if (t.contains("[Events]")) {
-                    String[] p = t.split(" ");
-                    int indexOfFrom = this.finder("(from:", p);
-                    int indexOfTo = this.finder("to:", p);
-                    boolean finished = p[1].equals("[O]") ? false : true;
-                    theList.add(new Events(String.join(" ", Arrays.copyOfRange(p, 2, indexOfFrom)),
-                            String.join(" ", Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo)),
-                            String.join(" ", Arrays.copyOfRange(p, indexOfTo + 1, p.length)), finished));
+                String[] p = t.split("\"\"");
+                boolean finished = p[1].equals("X");
+                String description = p[2];
+                Task specific = null;
+                if (p[0].contains("[ToDo]")) {
+                    specific = new ToDo(description, finished);
+                } else if (p[0].contains("[D]")) {
+                    specific = new Deadlines(description, p[3], finished);
+                } else if (p[0].contains("[Events]")) {
+                    specific = (new Events(description, p[4], p[5], finished));
+                } else {
+                    throw new CannotLoad();
                 }
+                theList.add(specific);
             }
         } catch (IOException ee) {
-            System.out.println(ee.getMessage());
+            throw new CannotLoad();
         }
         return theList;
-
     }
-
-    /**
-     * Finds the string in the array, used varags in params
-     * @param array array of words
-     * @param term the word you are looking for
-     * @return index of the string
-     */
-    public int finder(String term, String ... array) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(term)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
 
     /**
      * Storing the updated list into the .txt file
      * @param t the ArrayList you are updating
      */
-    public void store(ArrayList<Task> t) {
+    public void store(ArrayList<Task> t) throws CannotStore {
         try {
             File directory = new File("theData");
             File theFinalFile = new File(directory, "Jocelyn.txt");
             FileWriter a = new FileWriter(theFinalFile, false);
             for (Task theTask : t) {
-                a.write(theTask.toString() + "\n");
+                a.write(theTask.store() + "\n");
             }
             a.close();
         } catch (IOException e) {
@@ -104,6 +92,7 @@ public class StoringList {
 
     }
 }
+
 
 
 

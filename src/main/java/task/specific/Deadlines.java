@@ -36,7 +36,17 @@ public class Deadlines extends Task {
      * @return a string
      */
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline + ")";
+        return "[Deadline]\"\"" + super.toString() + " (by: " + deadline + ")";
+    }
+
+    /**
+     * Used ChatGPT's idea to have a separate idea
+     * for serialization instead of using the toString method.
+     */
+    @Override
+    public String store() {
+        return "[Deadline]\"\"" + super.store()
+                + this.deadline;
     }
 
     public String getDeadline() {

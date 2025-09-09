@@ -1,5 +1,6 @@
 package parse;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import exceptions.EmptyList;
@@ -17,16 +18,105 @@ public class Parser {
      * Enum class in charge of splitting the different commands.
      */
     public enum Commands {
-        List,
-        Mark,
-        Unmark,
-        Delete,
-        Invalid,
-        Find,
-        Bye,
-        ToDo,
-        Event,
-        Deadline
+        LIST {
+            /**
+             * prints out the list
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment.
+             */
+            public String run(TaskList e, String[] statement) {
+                return e.printList();
+            }
+        },
+        MARK {
+            /**
+             * marks the list
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment.
+             */
+            public String run(TaskList e, String[] statement) throws EmptyList {
+                if (e.lengthOfList() > 0) {
+                    return e.mark(Integer.parseInt(statement[1]));
+                }
+                throw new EmptyList();
+            }
+        },
+        UNMARK {
+            /**
+             * unmarks element in list
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment.
+             */
+            public String run(TaskList e, String[] statement) throws EmptyList {
+                if (e.lengthOfList() > 0) {
+                    return e.unmark(Integer.parseInt(statement[1]));
+                }
+                throw new EmptyList();
+            }
+        },
+
+        DELETE {
+            /**
+             * deletes element in list
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment
+             */
+            public String run(TaskList e, String[] statement) throws EmptyList {
+                if (e.lengthOfList() > 0) {
+                    return e.delete(Integer.parseInt(statement[1]));
+                }
+                throw new EmptyList();
+            }
+        },
+        FIND {
+            /**
+             * finds task in list
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment
+             */
+            public String run(TaskList e, String[] statement) throws EmptyList {
+                if (e.lengthOfList() > 0) {
+                    return e.find(String.join(" ",
+                            Arrays.copyOfRange(statement, 1, statement.length)));
+                }
+                throw new EmptyList();
+            }
+        },
+        BYE {
+            /**
+             * shuts down the thing
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment
+             */
+            public String run(TaskList e, String[] statement) {
+                return "BYEBYEBYE";
+            }
+        },
+        ADDTOLIST {
+            /**
+             * adds task to the list
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return string comment
+             */
+            public String run(TaskList e, String[] statement) {
+                return String.join(" ", statement);
+            }
+        };
+
+        /**
+         * does enum task in the list
+         * @param e the TaskList you are working on
+         * @param statement user statement
+         * @return string comment
+         */
+        public abstract String run(TaskList e, String[] statement) throws EmptyList;
     }
 
     /**
@@ -40,7 +130,13 @@ public class Parser {
                 return c;
             }
         }
-        return Commands.Invalid;
+        ArrayList<String> a = new ArrayList<>(Arrays.asList("todo", "event", "deadline"));
+        for (String stringy : a) {
+            if (s.equalsIgnoreCase(stringy)) {
+                return Commands.ADDTOLIST;
+            }
+        }
+        return null;
     }
 
     /**
@@ -49,40 +145,19 @@ public class Parser {
      * @param s user's message
      * @param e the echo they have
      * @return formatted String
+     *
      */
     public static String validityOfWords(String s, TaskList e) throws InvalidInput, EmptyList {
         s = s.trim();
-        String t = "";
+        // split the statement
+        // basically p is the user string in an array
         String[] p = s.split("\\s+");
         Parser pa = new Parser();
         Commands command = pa.checkerOfCommand(p[0].toLowerCase());
-        switch (command) {
-        case List:
-            t += e.printList();
-            break;
-        case Unmark:
-            // need a try-catch if list isn't that long
-            t += e.unmark(Integer.parseInt(p[1]));
-            break;
-        case Mark:
-            t += e.mark(Integer.parseInt(p[1]));
-            break;
-        case Delete:
-            t += e.delete(Integer.parseInt(p[1]));
-            break;
-        case Find:
-            t += e.find(String.join(" ", Arrays.copyOfRange(p, 1, p.length)));
-            break;
-        case Bye:
-            t += "BYEBYEBYE";
-            break;
-        case Invalid:
-            t += "Invalid Command";
-            break;
-        default:
-            t += e.addToList(s);
-
+        try {
+            return command.run(e, p);
+        } catch (NullPointerException error) {
+            throw new InvalidInput();
         }
-        return t;
     }
 }

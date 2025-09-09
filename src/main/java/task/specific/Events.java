@@ -54,6 +54,16 @@ public class Events extends Task {
      */
     public String toString() {
         return "[Events]" + super.toString()
-                + " (from: " + startingTime + " to: " + endingTime + ")";
+                + " (from:" + startingTime + "to: " + endingTime + ")";
+    }
+
+    /**
+     * returns the stored way
+     * @return stored method
+     */
+    @Override
+    public String store() {
+        return "[Events]" + super.toString() + startingTime + "\"\"" + endingTime;
     }
 }
+
