@@ -1,13 +1,14 @@
 package storetasks;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import date.DateConverter;
 import exceptions.CannotLoad;
 import exceptions.CannotStore;
 import exceptions.EmptyList;
+import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
 import exceptions.InvalidInput;
 import storage.StoringList;
@@ -79,7 +80,7 @@ public class TaskList {
              * @throws InvalidDateInput date format is invalid
              * @throws InvalidInput the input is invalid
              */
-            public Task pass(String ... p) throws InvalidDateInput, InvalidInput {
+            public Task pass(String ... p) throws InvalidDateInput, InvalidInput, EventTimelineInvalid {
                 int indexOfFrom = finder(p, "/from");
                 int indexOfTo = finder(p, "/to");
                 String description = String.join(" ",
@@ -92,8 +93,13 @@ public class TaskList {
                         Arrays.copyOfRange(p, indexOfTo + 1, p.length));
                 DateConverter en = new DateConverter(endingTime);
                 String stringEndingTime = en.toString();
-                return new Events(description,
+                Comparator<DateConverter> comparison = Comparator.comparing(DateConverter::getYear)
+                        .thenComparing(DateConverter::getMonth).thenComparing(DateConverter::getDay);
+                if (comparison.compare(st, en) != 1) {
+                    return new Events(description,
                             stringStartingTime, stringEndingTime);
+                }
+                throw new EventTimelineInvalid();
             }
 
         };
@@ -112,7 +118,7 @@ public class TaskList {
             }
             return -1;
         }
-        public abstract Task pass(String ... p) throws InvalidInput, InvalidDateInput;
+        public abstract Task pass(String ... p) throws InvalidInput, InvalidDateInput, EventTimelineInvalid;
 
     }
 
@@ -141,7 +147,8 @@ public class TaskList {
      * @throws CannotLoad cannot load
      * @throws CannotStore cannot store
      */
-    public String addToList(String s) throws InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore {
+    public String addToList(String s) throws EventTimelineInvalid,
+            InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore {
         this.taskList = slist.load();
         s = s.trim();
         String[] p = s.split("\\s+");
