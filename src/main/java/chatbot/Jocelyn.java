@@ -3,7 +3,6 @@ package chatbot;
 import exceptions.CannotLoad;
 import parse.Parser;
 import storage.StoringList;
-import userinteraction.UserInput;
 
 /**
  * This is the main method of the ChatBot.

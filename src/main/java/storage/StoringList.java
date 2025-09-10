@@ -45,6 +45,7 @@ public class StoringList {
             while (nextLiner.hasNextLine()) {
                 String t = nextLiner.nextLine();
                 String[] p = t.split("\"\"");
+                assert p.length >= 3 : "the input of the task is invalid";
                 boolean finished = p[1].contains("[X]");
                 String description = p[2];
                 Task specific = null;

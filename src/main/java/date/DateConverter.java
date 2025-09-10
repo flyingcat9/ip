@@ -15,12 +15,12 @@ public class DateConverter {
 
     protected LocalDate date;
 
-
     /**
      * Constructor to create a new date.
      * @param date date that is meant to be converted.
      */
     public DateConverter(String date) throws InvalidDateInput {
+        assert date != null : "the date is null";
         try {
             this.date = LocalDate.parse(date);
         } catch (DateTimeParseException e) {
