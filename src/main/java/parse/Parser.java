@@ -57,6 +57,8 @@ public class Parser {
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                assert e != null : "the tasklist does not exist";
+                assert statement.length >= 2 : "the input is invalid";
                 if (e.lengthOfList() > 0) {
                     return e.unmark(Integer.parseInt(statement[1]));
                 }
@@ -73,6 +75,8 @@ public class Parser {
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                assert e != null : "the tasklist does not exist";
+                assert statement.length >= 2 : "the input is invalid";
                 if (e.lengthOfList() > 0) {
                     return e.delete(Integer.parseInt(statement[1]));
                 }

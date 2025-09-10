@@ -1,4 +1,3 @@
-[Deadline]""[X]""cry in bed""Mar 4 2025
-[ToDo]""[O]""cs2103t tutorial homework!""
+[ToDo]""[X]""cs2103t tutorial homework!""
 [Deadline]""[X]""eat potatoes""Apr 3 2025
 [Events]""[O]""eat mashed potates""Mar 4 2025""Jul 5 2024

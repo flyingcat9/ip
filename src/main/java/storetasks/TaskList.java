@@ -161,6 +161,7 @@ public class TaskList {
      */
     public String mark(Integer i) throws CannotLoad, CannotStore {
         this.taskList = slist.load();
+        assert !this.taskList.isEmpty() : "the tasklist is empty";
         this.taskList.get(i - 1).mark();
         slist.store(this.taskList);
         return "Well done! I have marked this "
