@@ -31,7 +31,7 @@ public class MainScene extends Application {
             stage.setScene(scene);
             fxmlLoader.<TheMainWindow>getController().setJocelyn(jocelyn);
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

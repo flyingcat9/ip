@@ -36,7 +36,7 @@ public class Parser {
              * @param statement user statement
              * @return string comment.
              */
-            public String run(TaskList e, String[] statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws EmptyList {
                 if (e.lengthOfList() > 0) {
                     return e.mark(Integer.parseInt(statement[1]));
                 }
@@ -50,7 +50,7 @@ public class Parser {
              * @param statement user statement
              * @return string comment.
              */
-            public String run(TaskList e, String[] statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws EmptyList {
                 if (e.lengthOfList() > 0) {
                     return e.unmark(Integer.parseInt(statement[1]));
                 }
@@ -65,7 +65,7 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String[] statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws EmptyList {
                 if (e.lengthOfList() > 0) {
                     return e.delete(Integer.parseInt(statement[1]));
                 }
@@ -79,7 +79,7 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String[] statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws EmptyList {
                 if (e.lengthOfList() > 0) {
                     return e.find(String.join(" ",
                             Arrays.copyOfRange(statement, 1, statement.length)));
@@ -94,7 +94,7 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String[] statement) {
+            public String run(TaskList e, String ... statement) {
                 return "BYEBYEBYE";
             }
         },
@@ -105,7 +105,7 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String[] statement) {
+            public String run(TaskList e, String ... statement) {
                 return String.join(" ", statement);
             }
         };
@@ -116,7 +116,7 @@ public class Parser {
          * @param statement user statement
          * @return string comment
          */
-        public abstract String run(TaskList e, String[] statement) throws EmptyList;
+        public abstract String run(TaskList e, String ... statement) throws EmptyList;
     }
 
     /**
