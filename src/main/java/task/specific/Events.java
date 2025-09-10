@@ -5,7 +5,7 @@ import task.Task;
 /**
  * This class represents an event. In other words, there is a
  * starting and an ending time.
- *
+ * NTS: add a comparator to compare startingTime and endingTime
  * @author: Ong Li Min
  */
 public class Events extends Task {
@@ -56,4 +56,14 @@ public class Events extends Task {
         return "[Events]" + super.toString()
                 + " (from: " + startingTime + " to: " + endingTime + ")";
     }
+
+    /**
+     * returns the stored way
+     * @return stored method
+     */
+    @Override
+    public String store() {
+        return "[Events]\"\"" + super.store() + startingTime + "\"\"" + endingTime;
+    }
 }
+

@@ -8,13 +8,6 @@ import task.Task;
  */
 public class ToDo extends Task {
 
-    /**
-     * Creating a new to do task.
-     * @param description
-     */
-    public ToDo(String description) {
-        super(description);
-    }
 
     /**
      * Creating a new task.specific.ToDo task
@@ -29,7 +22,16 @@ public class ToDo extends Task {
      * string
      * @return the string
      */
+    @Override
     public String toString() {
-        return "[ToDo]" + super.toString();
+        return "[ToDo] " + super.toString();
+    }
+
+    /**
+     * store the thing correctly
+     */
+    @Override
+    public String store() {
+        return "[ToDo]\"\"" + super.store();
     }
 }

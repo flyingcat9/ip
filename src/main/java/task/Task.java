@@ -61,5 +61,14 @@ public class Task {
         return " [" + this.getProgressStatus() + "] " + this.descript;
     }
 
+    /**
+     * Used ChatGPT's idea of using a separate method
+     * @return stored way
+     */
+    public String store() {
+        return "[" + this.getProgressStatus() + "]\"\"" + this.descript + "\"\"";
+    }
+
 
 }
+

@@ -2,8 +2,6 @@ package userinteraction;
 
 import java.util.Scanner;
 
-import exceptions.EmptyList;
-import exceptions.InvalidInput;
 import parse.Parser;
 import storetasks.TaskList;
 
@@ -29,12 +27,9 @@ public class UserInput {
         Parser i = new Parser();
         while (!uI.exitingTheLoop(userWords)) {
             try {
-                String s = i.validityOfWords(userWords, text);
-                System.out.println(s);
-            } catch (InvalidInput e) {
+                System.out.println(i.validityOfWords(userWords, text));
+            } catch (Exception e) {
                 System.out.println(e);
-            } catch (EmptyList t) {
-                System.out.println(t);
             }
             userWords = object.nextLine();
         }

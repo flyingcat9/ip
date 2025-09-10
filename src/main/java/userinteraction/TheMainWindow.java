@@ -1,8 +1,6 @@
 package userinteraction;
 
 import chatbot.Jocelyn;
-import exceptions.EmptyList;
-import exceptions.InvalidInput;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -10,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import parse.Parser;
 import storetasks.TaskList;
 
@@ -27,6 +26,7 @@ public class TheMainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private Button sendButton;
+    private Stage s;
 
     private Jocelyn jocelyn;
 
@@ -65,16 +65,20 @@ public class TheMainWindow extends AnchorPane {
         Parser i = new Parser();
         TaskList text = new TaskList();
         UserInput it = new UserInput();
+        String response = "";
         try {
-            String response = i.validityOfWords(input, text);
-            dialogContainer.getChildren().addAll(
+            response = i.validityOfWords(input, text);
+        } catch (Exception e) {
+            response = e.getMessage();
+        } finally {
+            if (!response.equals("BYEBYEBYE")) {
+                dialogContainer.getChildren().addAll(
                         DialogChatBox.getUserDialog(input, userImage),
                         DialogChatBox.getDukeDialog(response, jocelynImage));
-            userInput.clear();
-        } catch (InvalidInput e) {
-            System.out.println(e.getMessage());
-        } catch (EmptyList ee) {
-            System.out.println(ee.getMessage());
+                userInput.clear();
+            } else {
+                s.close();
+            }
         }
     }
 
@@ -88,6 +92,14 @@ public class TheMainWindow extends AnchorPane {
             return true;
         }
         return false;
+    }
+
+    /**
+     * sets the stage to give bye input
+     * @param stage passed form theMainScene
+     */
+    public void setStage(Stage stage) {
+        this.s = stage;
     }
 
 }

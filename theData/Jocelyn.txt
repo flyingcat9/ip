@@ -1,6 +1,4 @@
-[ToDo] [X] eat tomatoes
-[ToDo] [X] eat potatoes
-[ToDo] [X] eat potatoes and tomatoes
-[ToDo] [O] eat
-[ToDo] [O] eat
-[D] [O] sleep (by: Jun 4 2025)
+[Deadline]""[X]""cry in bed""Mar 4 2025
+[ToDo]""[O]""cs2103t tutorial homework!""
+[Deadline]""[X]""eat potatoes""Apr 3 2025
+[Events]""[O]""eat mashed potates""Mar 4 2025""Jul 5 2024
