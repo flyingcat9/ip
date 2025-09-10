@@ -1,8 +1,5 @@
 package userinteraction;
 
-import java.io.IOException;
-
-//import chatbot.Jocelyn;
 import chatbot.Jocelyn;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +11,12 @@ import javafx.stage.Stage;
  * A GUI for Duke using FXML.
  */
 public class MainScene extends Application {
-
     private Jocelyn jocelyn = new Jocelyn();
 
     /**
-     * Starting the home page for the chat bot.
+     * Starting the home page for the chatbot.
      * @param stage the stage you want to show
+     *
      */
     @Override
     public void start(Stage stage) {
@@ -29,7 +26,9 @@ public class MainScene extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<TheMainWindow>getController().setJocelyn(jocelyn);
+            TheMainWindow con = fxmlLoader.getController();
+            con.setJocelyn(jocelyn);
+            con.setStage(stage);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

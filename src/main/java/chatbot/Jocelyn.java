@@ -1,6 +1,7 @@
 package chatbot;
 
 import exceptions.CannotLoad;
+import parse.Parser;
 import storage.StoringList;
 import userinteraction.UserInput;
 
@@ -20,8 +21,8 @@ public class Jocelyn {
         StoringList a = new StoringList();
         try {
             a.load();
-            UserInput u = new UserInput();
-            UserInput.starting();
+            Parser p = new Parser();
+
         } catch (CannotLoad e) {
             System.out.println(e.getMessage());
         }

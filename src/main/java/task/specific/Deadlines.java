@@ -36,7 +36,7 @@ public class Deadlines extends Task {
      * @return a string
      */
     public String toString() {
-        return "[Deadline]\"\"" + super.toString() + " (by: " + deadline + ")";
+        return "[Deadline]" + super.toString() + " (by: " + deadline + ")";
     }
 
     /**

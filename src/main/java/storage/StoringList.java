@@ -21,17 +21,9 @@ import task.specific.ToDo;
 public class StoringList {
 
     /**
-     * In charge of loading the file into the taskList.
-     * @return the updated ArrayList
-     *
-     * Used ChatGPT for ideas on how to better encode the file ie: using || instead
-     * of only spaces in order to refactor my code.
-     *
-     * NTS: somehow include varags into the program also
-     *
-     * Example: [Deadline] "" [X] "" eat apples "" chairs
-     * Example: [ToDo] "" [X] "" eat trees
-     * Example: [Events] "" [X] "" eat a "" 2025-04-03 "" 2025-04-03
+     * In charge of loading the list
+     * @return the final updated list from the file
+     * @throws CannotLoad cannot load the list
      */
     public ArrayList<Task> load() throws CannotLoad {
         File directory = new File("theData");
@@ -53,15 +45,15 @@ public class StoringList {
             while (nextLiner.hasNextLine()) {
                 String t = nextLiner.nextLine();
                 String[] p = t.split("\"\"");
-                boolean finished = p[1].equals("X");
+                boolean finished = p[1].contains("[X]");
                 String description = p[2];
                 Task specific = null;
                 if (p[0].contains("[ToDo]")) {
                     specific = new ToDo(description, finished);
-                } else if (p[0].contains("[D]")) {
+                } else if (p[0].contains("[Deadline]")) {
                     specific = new Deadlines(description, p[3], finished);
                 } else if (p[0].contains("[Events]")) {
-                    specific = (new Events(description, p[4], p[5], finished));
+                    specific = (new Events(description, p[3], p[4], finished));
                 } else {
                     throw new CannotLoad();
                 }

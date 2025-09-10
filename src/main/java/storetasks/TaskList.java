@@ -147,7 +147,7 @@ public class TaskList {
         String[] p = s.split("\\s+");
         String stringy = "Got it, I have added this to my list!\n";
         Task newObject = checkerOfCommand(p[0]).pass(p);
-        taskList.add(newObject);
+        this.taskList.add(newObject);
         slist.store(this.taskList);
         return stringy + newObject.toString();
     }
@@ -159,19 +159,12 @@ public class TaskList {
      * @param i this contains the integer of the arraylist that is marked.
      * @return message
      */
-    public String mark(Integer i) {
-        try {
-            this.taskList = slist.load();
-            taskList.get(i - 1).mark();
-            slist.store(this.taskList);
-            return "Well done! I have marked this "
+    public String mark(Integer i) throws CannotLoad, CannotStore {
+        this.taskList = slist.load();
+        this.taskList.get(i - 1).mark();
+        slist.store(this.taskList);
+        return "Well done! I have marked this "
                     + "particular task as done: \n" + taskList.get(i - 1).toString();
-        } catch (CannotLoad e) {
-            System.out.println(e.getMessage());
-        } catch (CannotStore e) {
-            System.out.println(e.getMessage());
-        }
-        return "";
     }
 
     /**
@@ -261,7 +254,9 @@ public class TaskList {
      *
      * @return length of the list
      */
-    public int lengthOfList() {
+    public int lengthOfList() throws CannotLoad {
+        taskList = slist.load();
+        this.lengthOfList = taskList.size();
         return this.lengthOfList;
     }
 }

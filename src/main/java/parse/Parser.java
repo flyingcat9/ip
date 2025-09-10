@@ -3,7 +3,10 @@ package parse;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import exceptions.CannotLoad;
+import exceptions.CannotStore;
 import exceptions.EmptyList;
+import exceptions.InvalidDateInput;
 import exceptions.InvalidInput;
 import storetasks.TaskList;
 
@@ -25,7 +28,8 @@ public class Parser {
              * @param statement user statement
              * @return string comment.
              */
-            public String run(TaskList e, String[] statement) {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
                 return e.printList();
             }
         },
@@ -36,7 +40,8 @@ public class Parser {
              * @param statement user statement
              * @return string comment.
              */
-            public String run(TaskList e, String ... statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
                 if (e.lengthOfList() > 0) {
                     return e.mark(Integer.parseInt(statement[1]));
                 }
@@ -50,7 +55,8 @@ public class Parser {
              * @param statement user statement
              * @return string comment.
              */
-            public String run(TaskList e, String ... statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
                 if (e.lengthOfList() > 0) {
                     return e.unmark(Integer.parseInt(statement[1]));
                 }
@@ -65,7 +71,8 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String ... statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
                 if (e.lengthOfList() > 0) {
                     return e.delete(Integer.parseInt(statement[1]));
                 }
@@ -79,7 +86,8 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String ... statement) throws EmptyList {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
                 if (e.lengthOfList() > 0) {
                     return e.find(String.join(" ",
                             Arrays.copyOfRange(statement, 1, statement.length)));
@@ -94,7 +102,8 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String ... statement) {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
                 return "BYEBYEBYE";
             }
         },
@@ -105,8 +114,9 @@ public class Parser {
              * @param statement user statement
              * @return string comment
              */
-            public String run(TaskList e, String ... statement) {
-                return String.join(" ", statement);
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                return e.addToList(String.join(" ", statement));
             }
         };
 
@@ -116,7 +126,8 @@ public class Parser {
          * @param statement user statement
          * @return string comment
          */
-        public abstract String run(TaskList e, String ... statement) throws EmptyList;
+        public abstract String run(TaskList e, String ... statement) throws
+                InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad;
     }
 
     /**
@@ -147,7 +158,8 @@ public class Parser {
      * @return formatted String
      *
      */
-    public static String validityOfWords(String s, TaskList e) throws InvalidInput, EmptyList {
+    public static String validityOfWords(String s, TaskList e) throws
+            InvalidInput, EmptyList, InvalidDateInput, CannotStore, CannotLoad {
         s = s.trim();
         // split the statement
         // basically p is the user string in an array
