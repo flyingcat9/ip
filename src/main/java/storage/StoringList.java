@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import exceptions.CannotLoad;
@@ -45,16 +46,37 @@ public class StoringList {
             while (nextLiner.hasNextLine()) {
                 String t = nextLiner.nextLine();
                 String[] p = t.split("\"\"");
+                ArrayList<String> arraylist = new ArrayList<>(Arrays.asList(p));
                 assert p.length >= 3 : "the input of the task is invalid";
-                boolean finished = p[1].contains("[X]");
-                String description = p[2];
+                boolean finished = arraylist.get(1).contains("[X]");
+                String description = arraylist.get(2);
+                String deadline = "";
+                String startingTime = "";
+                String endingTime = "";
+                ArrayList<String> tags = new ArrayList<>();
+                for (int i = 0; i < arraylist.size(); i++ ) {
+                    if (arraylist.get(i).contains("#")) {
+                        tags.add(arraylist.get(i));
+                        arraylist.remove(i);
+                    } else if (arraylist.get(i).contains("\\by")) {
+                        deadline = arraylist.get(i).substring(3);
+                        arraylist.remove(i);
+                    } else if (arraylist.get(i).contains("\\from")) {
+                        startingTime = arraylist.get(i).substring(5);
+                        arraylist.remove(i);
+                    } else if (arraylist.get(i).contains("\\to")) {
+                        endingTime = arraylist.get(i).substring(3);
+                        arraylist.remove(i);
+                    }
+                }
                 Task specific = null;
-                if (p[0].contains("[ToDo]")) {
-                    specific = new ToDo(description, finished);
-                } else if (p[0].contains("[Deadline]")) {
-                    specific = new Deadlines(description, p[3], finished);
-                } else if (p[0].contains("[Events]")) {
-                    specific = (new Events(description, p[3], p[4], finished));
+                if (arraylist.get(0).contains("[ToDo]")) {
+                    specific = new ToDo(description, finished, tags);
+                } else if (arraylist.get(0).contains("[Deadline]")) {
+                    specific = new Deadlines(description, deadline, finished, tags);
+                } else if (arraylist.get(0).contains("[Events]")) {
+                    specific = new Events(description, startingTime,
+                            endingTime, finished, tags);
                 } else {
                     throw new CannotLoad();
                 }

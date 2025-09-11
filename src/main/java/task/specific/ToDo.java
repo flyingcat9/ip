@@ -1,5 +1,7 @@
 package task.specific;
 
+import java.util.ArrayList;
+
 import task.Task;
 
 /**
@@ -18,13 +20,24 @@ public class ToDo extends Task {
         super(description, finishType);
     }
 
+
+    /**
+     * Creating a new task.specific.ToDo task
+     * @param description of task
+     * @param finishType whether it is completed or not
+     * @param tags the tags a description it is related to
+     */
+    public ToDo(String description, boolean finishType, ArrayList<String> tags) {
+        super(description, finishType, tags);
+    }
+
     /**
      * string
      * @return the string
      */
     @Override
     public String toString() {
-        return "[ToDo] " + super.toString();
+        return "[ToDo] " + super.toString() + super.taggedToPrint();
     }
 
     /**
@@ -32,6 +45,6 @@ public class ToDo extends Task {
      */
     @Override
     public String store() {
-        return "[ToDo]\"\"" + super.store();
+        return "[ToDo]\"\"" + super.store() + super.taggedStrings();
     }
 }

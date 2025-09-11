@@ -1,5 +1,7 @@
 package task;
 
+import java.util.ArrayList;
+
 /**
  * This class represents a task that needs to be done.
  *
@@ -8,6 +10,22 @@ package task;
 public class Task {
     protected String descript;
     protected Boolean progressStatus;
+    protected ArrayList<String> tags = new ArrayList<>();
+
+    /**
+     * Creates a task
+     * @param d description
+     * @param p progress
+     * @param tag tags it's associated with
+     */
+    public Task(String d, Boolean p, ArrayList<String> tag) {
+        for (int i = 0; i < tag.size(); i++ ) {
+            tags.add(tag.get(i));
+        }
+        this.descript = d;
+        this.progressStatus = p;
+    }
+
 
     /**
      * Creates a task
@@ -15,8 +33,8 @@ public class Task {
      * @param p progress
      */
     public Task(String d, Boolean p) {
-        descript = d;
-        progressStatus = p;
+        this.descript = d;
+        this.progressStatus = p;
     }
 
     /**
@@ -58,8 +76,10 @@ public class Task {
      * @return nicely formatted String
      */
     public String toString() {
-        return " [" + this.getProgressStatus() + "] " + this.descript;
+        return " [" + this.getProgressStatus() + "] " + this.descript + " ";
     }
+
+
 
     /**
      * Used ChatGPT's idea of using a separate method
@@ -68,6 +88,31 @@ public class Task {
     public String store() {
         return "[" + this.getProgressStatus() + "]\"\"" + this.descript + "\"\"";
     }
+
+    /**
+     * returns tags as strings
+     * @return
+     */
+    public String taggedStrings() {
+        String s = "";
+        for (int i = 0; i < tags.size(); i++ ) {
+            s += tags.get(i) + "\"\"";
+        }
+        return s;
+    }
+
+    /**
+     * returns tags as strings
+     * @return
+     */
+    public String taggedToPrint() {
+        String s = "";
+        for (int i = 0; i < tags.size(); i++ ) {
+            s += tags.get(i) + " ";
+        }
+        return s;
+    }
+
 
 
 }
