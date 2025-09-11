@@ -49,24 +49,22 @@ public class StoringList {
                 ArrayList<String> arraylist = new ArrayList<>(Arrays.asList(p));
                 assert p.length >= 3 : "the input of the task is invalid";
                 boolean finished = arraylist.get(1).contains("[X]");
-                String description = arraylist.get(2);
+                String description = "";
                 String deadline = "";
                 String startingTime = "";
                 String endingTime = "";
                 ArrayList<String> tags = new ArrayList<>();
-                for (int i = 0; i < arraylist.size(); i++ ) {
+                for (int i = 2; i < arraylist.size(); i++ ) {
                     if (arraylist.get(i).contains("#")) {
                         tags.add(arraylist.get(i));
-                        arraylist.remove(i);
                     } else if (arraylist.get(i).contains("\\by")) {
                         deadline = arraylist.get(i).substring(3);
-                        arraylist.remove(i);
                     } else if (arraylist.get(i).contains("\\from")) {
                         startingTime = arraylist.get(i).substring(5);
-                        arraylist.remove(i);
                     } else if (arraylist.get(i).contains("\\to")) {
                         endingTime = arraylist.get(i).substring(3);
-                        arraylist.remove(i);
+                    } else {
+                        description += arraylist.get(i);
                     }
                 }
                 Task specific = null;

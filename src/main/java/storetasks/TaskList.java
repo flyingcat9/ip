@@ -45,19 +45,21 @@ public class TaskList {
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput, InvalidInput {
                 ArrayList<String> tags = new ArrayList<>();
-                p.remove(0);
+                ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 for (int i = 0; i < p.size(); i++ ) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
-                        p.remove(i);
+                    } else {
+                        descriptWithoutTags.add(p.get(i));
                     }
                 }
-                int indexOfBy = finder(p, "/by");
+                int indexOfBy = finder(descriptWithoutTags, "/by");
                 String task = String.join(" ",
-                        p.subList(1, indexOfBy));
+                        descriptWithoutTags.subList(1, indexOfBy));
                 DateConverter de = new DateConverter(
                             String.join(" ",
-                                    p.subList(indexOfBy + 1, p.size())));
+                                    descriptWithoutTags.subList(indexOfBy + 1,
+                                            descriptWithoutTags.size())));
                 String d = de.toString();
                 return new Deadlines(task, d, false, tags);
             }
@@ -75,15 +77,17 @@ public class TaskList {
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput, InvalidInput {
                 ArrayList<String> tags = new ArrayList<>();
+                ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 p.remove(0);
                 for (int i = 0; i < p.size(); i++ ) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
-                        p.remove(i);
+                    } else {
+                        descriptWithoutTags.add(p.get(i));
                     }
                 }
                 return new ToDo(String.join(" ",
-                        p), false, tags);
+                        descriptWithoutTags), false, tags);
             }
         },
 
@@ -99,23 +103,24 @@ public class TaskList {
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
                     InvalidInput, EventTimelineInvalid {
                 ArrayList<String> tags = new ArrayList<>(); // doing the tagging, might do a subfn later
-                p.remove(0);
+                ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 for (int i = 0; i < p.size(); i++ ) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
-                        p.remove(i);
+                    } else {
+                        descriptWithoutTags.add(p.get(i));
                     }
                 }
-                int indexOfFrom = finder(p, "/from");
-                int indexOfTo = finder(p, "/to");
+                int indexOfFrom = finder(descriptWithoutTags, "/from");
+                int indexOfTo = finder(descriptWithoutTags, "/to");
                 String description = String.join(" ",
-                        p.subList( 1, indexOfFrom));
+                        descriptWithoutTags.subList( 1, indexOfFrom));
                 String startingTime = String.join(" ",
-                        p.subList(indexOfFrom + 1, indexOfTo));
+                        descriptWithoutTags.subList(indexOfFrom + 1, indexOfTo));
                 DateConverter st = new DateConverter(startingTime);
                 String stringStartingTime = st.toString();
                 String endingTime = String.join(" ",
-                        p.subList(indexOfTo + 1, p.size()));
+                        descriptWithoutTags.subList(indexOfTo + 1, p.size()));
                 DateConverter en = new DateConverter(endingTime);
                 String stringEndingTime = en.toString();
                 Comparator<DateConverter> comparison =

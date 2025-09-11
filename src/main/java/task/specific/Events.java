@@ -69,7 +69,7 @@ public class Events extends Task {
      */
     public String toString() {
         return "[Events]" + super.toString()
-                + " (from: " + startingTime + " to: " + endingTime + ")"
+                + " (from: " + startingTime + " to: " + endingTime + ") "
                 + super.taggedToPrint();
     }
 
