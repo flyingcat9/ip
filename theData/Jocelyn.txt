@@ -1,3 +1,9 @@
-[ToDo]""[X]""cs2103t tutorial homework!""
-[Deadline]""[X]""eat potatoes""Apr 3 2025
-[Events]""[O]""eat mashed potates""Mar 4 2025""Jul 5 2024
+[ToDo]""[O]""eat apple""#sofun""
+[Deadline]""[X]""apple""\byApr 3 2025""#sofun""
+[Events]""[X]""apple""\fromApr 3 2025""\toApr 5 2025""#sofun""
+[Deadline]""[O]""apple""\byApr 3 2025""
+[ToDo]""[O]""eat apple""
+[Deadline]""[O]""apple""\byApr 3 2025""
+[Deadline]""[O]""apple""\byApr 3 2025""
+[Deadline]""[O]""eat apple""\byApr 3 2025""
+[Events]""[O]""eat apple""\fromApr 3 2025""\toApr 6 2025""

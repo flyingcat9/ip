@@ -1,5 +1,7 @@
 package task.specific;
 
+import java.util.ArrayList;
+
 import task.Task;
 
 /**
@@ -20,6 +22,19 @@ public class Events extends Task {
      */
     public Events(String description, String sT, String eT) {
         super(description);
+        this.startingTime = sT;
+        this.endingTime = eT;
+    }
+
+    /**
+     * Creating an event.
+     * @param description description of event
+     * @param sT starting time
+     * @param eT ending time
+     */
+    public Events(String description, String sT, String eT, boolean finishType,
+                  ArrayList<String> tags) {
+        super(description, finishType, tags);
         this.startingTime = sT;
         this.endingTime = eT;
     }
@@ -54,7 +69,8 @@ public class Events extends Task {
      */
     public String toString() {
         return "[Events]" + super.toString()
-                + " (from: " + startingTime + " to: " + endingTime + ")";
+                + " (from: " + startingTime + " to: " + endingTime + ") "
+                + super.taggedToPrint();
     }
 
     /**
@@ -63,7 +79,9 @@ public class Events extends Task {
      */
     @Override
     public String store() {
-        return "[Events]\"\"" + super.store() + startingTime + "\"\"" + endingTime;
+        return "[Events]\"\"" + super.store() + "\\from"
+                + startingTime + "\"\"" + "\\to" + endingTime
+                + "\"\"" + super.taggedStrings();
     }
 }
 

@@ -1,13 +1,14 @@
 package storetasks;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import date.DateConverter;
 import exceptions.CannotLoad;
 import exceptions.CannotStore;
 import exceptions.EmptyList;
+import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
 import exceptions.InvalidInput;
 import storage.StoringList;
@@ -42,15 +43,25 @@ public class TaskList {
              * @throws InvalidDateInput date format is invalid
              * @throws InvalidInput the input is invalid
              */
-            public Task pass(String ... p) throws InvalidDateInput, InvalidInput {
-                int indexOfBy = finder(p, "/by");
+            public Task pass(ArrayList<String> p) throws InvalidDateInput, InvalidInput {
+                ArrayList<String> tags = new ArrayList<>();
+                ArrayList<String> descriptWithoutTags = new ArrayList<>();
+                for (int i = 0; i < p.size(); i++ ) {
+                    if (p.get(i).contains("#")) {
+                        tags.add(p.get(i));
+                    } else {
+                        descriptWithoutTags.add(p.get(i));
+                    }
+                }
+                int indexOfBy = finder(descriptWithoutTags, "/by");
                 String task = String.join(" ",
-                        Arrays.copyOfRange(p, 1, indexOfBy));
+                        descriptWithoutTags.subList(1, indexOfBy));
                 DateConverter de = new DateConverter(
                             String.join(" ",
-                                    Arrays.copyOfRange(p, indexOfBy + 1, p.length)));
+                                    descriptWithoutTags.subList(indexOfBy + 1,
+                                            descriptWithoutTags.size())));
                 String d = de.toString();
-                return new Deadlines(task, d);
+                return new Deadlines(task, d, false, tags);
             }
 
         },
@@ -59,14 +70,24 @@ public class TaskList {
         ToDo {
             /**
              * adds a new todo object
-             * @param p the user string
+             * @param p the user string split as an arraylist
              * @return the todo object
              * @throws InvalidDateInput the date format is invalid
              * @throws InvalidInput the input is invalid
              */
-            public Task pass(String ... p) throws InvalidDateInput, InvalidInput {
+            public Task pass(ArrayList<String> p) throws InvalidDateInput, InvalidInput {
+                ArrayList<String> tags = new ArrayList<>();
+                ArrayList<String> descriptWithoutTags = new ArrayList<>();
+                p.remove(0);
+                for (int i = 0; i < p.size(); i++ ) {
+                    if (p.get(i).contains("#")) {
+                        tags.add(p.get(i));
+                    } else {
+                        descriptWithoutTags.add(p.get(i));
+                    }
+                }
                 return new ToDo(String.join(" ",
-                        Arrays.copyOfRange(p, 1, p.length)), false);
+                        descriptWithoutTags), false, tags);
             }
         },
 
@@ -79,21 +100,37 @@ public class TaskList {
              * @throws InvalidDateInput date format is invalid
              * @throws InvalidInput the input is invalid
              */
-            public Task pass(String ... p) throws InvalidDateInput, InvalidInput {
-                int indexOfFrom = finder(p, "/from");
-                int indexOfTo = finder(p, "/to");
+            public Task pass(ArrayList<String> p) throws InvalidDateInput,
+                    InvalidInput, EventTimelineInvalid {
+                ArrayList<String> tags = new ArrayList<>(); // doing the tagging, might do a subfn later
+                ArrayList<String> descriptWithoutTags = new ArrayList<>();
+                for (int i = 0; i < p.size(); i++ ) {
+                    if (p.get(i).contains("#")) {
+                        tags.add(p.get(i));
+                    } else {
+                        descriptWithoutTags.add(p.get(i));
+                    }
+                }
+                int indexOfFrom = finder(descriptWithoutTags, "/from");
+                int indexOfTo = finder(descriptWithoutTags, "/to");
                 String description = String.join(" ",
-                        Arrays.copyOfRange(p, 1, indexOfFrom));
+                        descriptWithoutTags.subList( 1, indexOfFrom));
                 String startingTime = String.join(" ",
-                        Arrays.copyOfRange(p, indexOfFrom + 1, indexOfTo));
+                        descriptWithoutTags.subList(indexOfFrom + 1, indexOfTo));
                 DateConverter st = new DateConverter(startingTime);
                 String stringStartingTime = st.toString();
                 String endingTime = String.join(" ",
-                        Arrays.copyOfRange(p, indexOfTo + 1, p.length));
+                        descriptWithoutTags.subList(indexOfTo + 1, p.size()));
                 DateConverter en = new DateConverter(endingTime);
                 String stringEndingTime = en.toString();
-                return new Events(description,
-                            stringStartingTime, stringEndingTime);
+                Comparator<DateConverter> comparison =
+                        Comparator.comparing(DateConverter::getYear)
+                        .thenComparing(DateConverter::getMonth).thenComparing(DateConverter::getDay);
+                if (comparison.compare(st, en) != 1) {
+                    return new Events(description,
+                            stringStartingTime, stringEndingTime, false, tags);
+                }
+                throw new EventTimelineInvalid();
             }
 
         };
@@ -104,15 +141,16 @@ public class TaskList {
          * @param term you are searching for
          * @return the index of the word
          */
-        public static int finder(String[] array, String term) {
-            for (int i = 0; i < array.length; i++) {
-                if (array[i].equals(term)) {
+        public static int finder(ArrayList<String> array, String term) {
+            for (int i = 0; i < array.size(); i++) {
+                if (array.get(i).equals(term)) {
                     return i;
                 }
             }
             return -1;
         }
-        public abstract Task pass(String ... p) throws InvalidInput, InvalidDateInput;
+        public abstract Task pass(ArrayList<String> p)
+                throws InvalidInput, InvalidDateInput, EventTimelineInvalid;
 
     }
 
@@ -141,12 +179,14 @@ public class TaskList {
      * @throws CannotLoad cannot load
      * @throws CannotStore cannot store
      */
-    public String addToList(String s) throws InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore {
+    public String addToList(String s) throws EventTimelineInvalid,
+            InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore {
         this.taskList = slist.load();
         s = s.trim();
         String[] p = s.split("\\s+");
         String stringy = "Got it, I have added this to my list!\n";
-        Task newObject = checkerOfCommand(p[0]).pass(p);
+        ArrayList<String> a = new ArrayList<>(Arrays.asList(p));
+        Task newObject = checkerOfCommand(p[0]).pass(a);
         this.taskList.add(newObject);
         slist.store(this.taskList);
         return stringy + newObject.toString();
