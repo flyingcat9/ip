@@ -8,6 +8,7 @@ import exceptions.CannotStore;
 import exceptions.EmptyList;
 import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
+import exceptions.InvalidElementInList;
 import exceptions.InvalidInput;
 import storetasks.TaskList;
 
@@ -30,7 +31,8 @@ public class Parser {
              * @return string comment.
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidElementInList,
+                    InvalidInput, EmptyList, CannotStore, CannotLoad {
                 return e.printList();
             }
         },
@@ -42,7 +44,8 @@ public class Parser {
              * @return string comment.
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidElementInList,
+                    InvalidInput, EmptyList, CannotStore, CannotLoad {
                 if (e.lengthOfList() > 0) {
                     return e.mark(Integer.parseInt(statement[1]));
                 }
@@ -57,7 +60,8 @@ public class Parser {
              * @return string comment.
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput, InvalidElementInList,
+                    EmptyList, CannotStore, CannotLoad {
                 assert e != null : "the tasklist does not exist";
                 assert statement.length >= 2 : "the input is invalid";
                 if (e.lengthOfList() > 0) {
@@ -75,7 +79,8 @@ public class Parser {
              * @return string comment
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput,
+                    EmptyList, CannotStore, CannotLoad, InvalidElementInList {
                 assert e != null : "the tasklist does not exist";
                 assert statement.length >= 2 : "the input is invalid";
                 if (e.lengthOfList() > 0) {
@@ -92,7 +97,8 @@ public class Parser {
              * @return string comment
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput,
+                    EmptyList, CannotStore, CannotLoad, InvalidElementInList {
                 if (e.lengthOfList() > 0) {
                     return e.find(String.join(" ",
                             Arrays.copyOfRange(statement, 1, statement.length)));
@@ -108,7 +114,8 @@ public class Parser {
              * @return string comment
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput,
+                    EmptyList, CannotStore, CannotLoad, InvalidElementInList {
                 return "BYEBYEBYE";
             }
         },
@@ -121,8 +128,28 @@ public class Parser {
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
-                    CannotLoad, EventTimelineInvalid {
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList {
                 return e.addToList(String.join(" ", statement));
+            }
+        },
+
+        ADDTAG {
+            /**
+             *
+             * @param e the TaskList you are working on
+             * @param statement user statement
+             * @return
+             * @throws InvalidDateInput
+             * @throws InvalidInput
+             * @throws EmptyList
+             * @throws CannotStore
+             * @throws CannotLoad
+             * @throws EventTimelineInvalid
+             */
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList {
+                return e.addTag(statement);
             }
         };
 
@@ -133,7 +160,9 @@ public class Parser {
          * @return string comment
          */
         public abstract String run(TaskList e, String ... statement) throws
-                EventTimelineInvalid, InvalidDateInput, InvalidInput, EmptyList, CannotStore, CannotLoad;
+                EventTimelineInvalid, InvalidDateInput,
+                InvalidInput, EmptyList, CannotStore, CannotLoad,
+                InvalidElementInList;
     }
 
     /**
@@ -165,7 +194,8 @@ public class Parser {
      *
      */
     public static String validityOfWords(String s, TaskList e) throws
-            EventTimelineInvalid, InvalidInput, EmptyList, InvalidDateInput, CannotStore, CannotLoad {
+            EventTimelineInvalid, InvalidInput, EmptyList,
+            InvalidDateInput, CannotStore, CannotLoad, InvalidElementInList {
         s = s.trim();
         // split the statement
         // basically p is the user string in an array
