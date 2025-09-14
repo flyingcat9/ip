@@ -1,6 +1,7 @@
 package task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class represents a task that needs to be done.
@@ -112,6 +113,22 @@ public class Task {
         }
         return s;
     }
+
+    public void addTags(String[] theTags) {
+        for (int i = 0; i < theTags.length; i++) {
+            tags.add(theTags[i]);
+        }
+    }
+
+    public void removeTags(String[] theTags) {
+        for (int i = 0; i < theTags.length; i++) {
+            tags.remove(theTags[i]);
+        }
+        if (theTags.length == 0) {
+            tags.clear();
+        }
+    }
+
 
 
 

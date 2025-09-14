@@ -10,6 +10,7 @@ import exceptions.CannotStore;
 import exceptions.EmptyList;
 import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
+import exceptions.InvalidElementInList;
 import exceptions.InvalidInput;
 import storage.StoringList;
 import task.Task;
@@ -104,6 +105,7 @@ public class TaskList {
                     InvalidInput, EventTimelineInvalid {
                 ArrayList<String> tags = new ArrayList<>(); // doing the tagging, might do a subfn later
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
+                p.remove(0);
                 for (int i = 0; i < p.size(); i++ ) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
@@ -114,13 +116,13 @@ public class TaskList {
                 int indexOfFrom = finder(descriptWithoutTags, "/from");
                 int indexOfTo = finder(descriptWithoutTags, "/to");
                 String description = String.join(" ",
-                        descriptWithoutTags.subList( 1, indexOfFrom));
+                        descriptWithoutTags.subList(0, indexOfFrom));
                 String startingTime = String.join(" ",
                         descriptWithoutTags.subList(indexOfFrom + 1, indexOfTo));
                 DateConverter st = new DateConverter(startingTime);
                 String stringStartingTime = st.toString();
                 String endingTime = String.join(" ",
-                        descriptWithoutTags.subList(indexOfTo + 1, p.size()));
+                        descriptWithoutTags.subList(indexOfTo + 1, descriptWithoutTags.size()));
                 DateConverter en = new DateConverter(endingTime);
                 String stringEndingTime = en.toString();
                 Comparator<DateConverter> comparison =
@@ -299,6 +301,39 @@ public class TaskList {
         taskList = slist.load();
         this.lengthOfList = taskList.size();
         return this.lengthOfList;
+    }
+
+    /**
+     *
+     * @param s the statement
+     * @return
+     */
+    public String addTag(String[] s) throws CannotLoad, CannotStore,
+            InvalidElementInList {
+        taskList = slist.load();
+        int number = 0;
+        number = Integer.parseInt(s[1]) - 1;
+        if (number >= taskList.size() || number < 0) {
+            throw new InvalidElementInList();
+        }
+        taskList.get(number).addTags(Arrays.copyOfRange(s, 2, s.length));
+        slist.store(taskList);
+        return "Got it, I have added the tags to task " + number + ".\n This is  "
+                + " the current element " + taskList.get(number).toString();
+    }
+
+    public String deleteTag(String[] s) throws CannotLoad, CannotStore,
+            InvalidElementInList {
+        taskList = slist.load();
+        int number = 0;
+        number = Integer.parseInt(s[1]) - 1;
+        if (number >= taskList.size() || number < 0) {
+            throw new InvalidElementInList();
+        }
+        taskList.get(number).removeTags(Arrays.copyOfRange(s, 2, s.length));
+        slist.store(taskList);
+        return "Got it, I have remove the tags for task " + number + ".\n This is  "
+                + " the current element " + taskList.get(number).toString();
     }
 }
 
