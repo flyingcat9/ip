@@ -115,12 +115,20 @@ public class Task {
     }
 
     public void addTags(String[] theTags) {
-        System.out.println("hihi");
         for (int i = 0; i < theTags.length; i++) {
             tags.add(theTags[i]);
         }
-        System.out.println("hi");
     }
+
+    public void removeTags(String[] theTags) {
+        for (int i = 0; i < theTags.length; i++) {
+            tags.remove(theTags[i]);
+        }
+        if (theTags.length == 0) {
+            tags.clear();
+        }
+    }
+
 
 
 

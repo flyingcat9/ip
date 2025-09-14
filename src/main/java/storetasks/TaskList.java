@@ -318,7 +318,21 @@ public class TaskList {
         }
         taskList.get(number).addTags(Arrays.copyOfRange(s, 2, s.length));
         slist.store(taskList);
-        return "Got it, I have added the tags to " + number + ".\n This is  "
+        return "Got it, I have added the tags to task " + number + ".\n This is  "
+                + " the current element " + taskList.get(number).toString();
+    }
+
+    public String deleteTag(String[] s) throws CannotLoad, CannotStore,
+            InvalidElementInList {
+        taskList = slist.load();
+        int number = 0;
+        number = Integer.parseInt(s[1]) - 1;
+        if (number >= taskList.size() || number < 0) {
+            throw new InvalidElementInList();
+        }
+        taskList.get(number).removeTags(Arrays.copyOfRange(s, 2, s.length));
+        slist.store(taskList);
+        return "Got it, I have remove the tags for task " + number + ".\n This is  "
                 + " the current element " + taskList.get(number).toString();
     }
 }

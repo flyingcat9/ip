@@ -151,6 +151,13 @@ public class Parser {
                     CannotLoad, EventTimelineInvalid, InvalidElementInList {
                 return e.addTag(statement);
             }
+        },
+        DELETETAG {
+            public String run(TaskList e, String ... statement) throws
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList {
+                return e.deleteTag(statement);
+            }
         };
 
         /**
