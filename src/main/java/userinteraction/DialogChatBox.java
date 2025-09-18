@@ -24,7 +24,7 @@ public class DialogChatBox extends HBox {
     private Label dialog;
     @FXML
     private ImageView displayPicture;
-    private Jocelyn jocelyn = new Jocelyn();
+    private final Jocelyn jocelyn = new Jocelyn();
 
     /**
      * Creating a new instance of a dialog chat box

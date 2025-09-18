@@ -55,7 +55,7 @@ public class StoringList {
                 String startingTime = "";
                 String endingTime = "";
                 ArrayList<String> tags = new ArrayList<>();
-                for (int i = 2; i < arraylist.size(); i++ ) {
+                for (int i = 2; i < arraylist.size(); i++) {
                     if (arraylist.get(i).contains("#")) {
                         tags.add(arraylist.get(i));
                     } else if (arraylist.get(i).contains("\\by")) {

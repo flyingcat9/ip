@@ -11,8 +11,8 @@ import task.Task;
  * @author: Ong Li Min
  */
 public class Events extends Task {
-    private String startingTime;
-    private String endingTime;
+    private final String startingTime;
+    private final String endingTime;
 
     /**
      * Creating an event.
@@ -60,12 +60,9 @@ public class Events extends Task {
         return this.startingTime;
     }
 
-
-
-
     /**
      * returns a string
-     * @return string of the event
+     * @return the string
      */
     public String toString() {
         return "[Events]" + super.toString()

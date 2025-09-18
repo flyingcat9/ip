@@ -11,6 +11,7 @@ import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
 import exceptions.InvalidElementInList;
 import exceptions.InvalidInput;
+import exceptions.NoDeadlineProvided;
 import storetasks.TaskList;
 
 /**
@@ -32,8 +33,9 @@ public class Parser {
              * @return string comment.
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidElementInList,
-                    InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 return e.printList();
             }
         },
@@ -45,8 +47,9 @@ public class Parser {
              * @return string comment.
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidElementInList,
-                    InvalidInput, EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 if (e.lengthOfList() > 0) {
                     return e.mark(Integer.parseInt(statement[1]));
                 }
@@ -61,8 +64,9 @@ public class Parser {
              * @return string comment.
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput, InvalidElementInList,
-                    EmptyList, CannotStore, CannotLoad {
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 assert e != null : "the tasklist does not exist";
                 assert statement.length >= 2 : "the input is invalid";
                 if (e.lengthOfList() > 0) {
@@ -80,8 +84,9 @@ public class Parser {
              * @return string comment
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput,
-                    EmptyList, CannotStore, CannotLoad, InvalidElementInList {
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 assert e != null : "the tasklist does not exist";
                 assert statement.length >= 2 : "the input is invalid";
                 if (e.lengthOfList() > 0) {
@@ -98,8 +103,9 @@ public class Parser {
              * @return string comment
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput,
-                    EmptyList, CannotStore, CannotLoad, InvalidElementInList {
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 if (e.lengthOfList() > 0) {
                     return e.find(String.join(" ",
                             Arrays.copyOfRange(statement, 1, statement.length)));
@@ -115,8 +121,9 @@ public class Parser {
              * @return string comment
              */
             public String run(TaskList e, String ... statement) throws
-                    InvalidDateInput, InvalidInput,
-                    EmptyList, CannotStore, CannotLoad, InvalidElementInList {
+                    InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 return "BYEBYEBYE";
             }
         },
@@ -129,34 +136,36 @@ public class Parser {
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
-                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError {
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 return e.addToList(String.join(" ", statement));
             }
         },
 
         ADDTAG {
             /**
-             *
              * @param e the TaskList you are working on
              * @param statement user statement
              * @return
-             * @throws InvalidDateInput
-             * @throws InvalidInput
-             * @throws EmptyList
-             * @throws CannotStore
-             * @throws CannotLoad
-             * @throws EventTimelineInvalid
+             * @throws InvalidDateInput the date is invalid
+             * @throws InvalidInput the input is invalid
+             * @throws EmptyList you are deleting/doing something an empty list
+             * @throws CannotStore unable to store user input
+             * @throws CannotLoad can not load user input
+             * @throws EventTimelineInvalid event is invalid
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
-                    CannotLoad, EventTimelineInvalid, InvalidElementInList {
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 return e.addTag(statement);
             }
         },
         DELETETAG {
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
-                    CannotLoad, EventTimelineInvalid, InvalidElementInList {
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                    NoDeadlineProvided {
                 return e.deleteTag(statement);
             }
         };
@@ -168,9 +177,9 @@ public class Parser {
          * @return string comment
          */
         public abstract String run(TaskList e, String ... statement) throws
-                EventTimelineInvalid, InvalidDateInput,
-                InvalidInput, EmptyList, CannotStore, CannotLoad,
-                InvalidElementInList, DuplicationError;
+                InvalidDateInput, InvalidInput, EmptyList, CannotStore,
+                CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
+                NoDeadlineProvided;
     }
 
     /**
@@ -204,7 +213,7 @@ public class Parser {
     public static String validityOfWords(String s, TaskList e) throws
             EventTimelineInvalid, InvalidInput, EmptyList,
             InvalidDateInput, CannotStore, CannotLoad, InvalidElementInList,
-            DuplicationError {
+            DuplicationError, NoDeadlineProvided {
         s = s.trim();
         // split the statement
         // basically p is the user string in an array

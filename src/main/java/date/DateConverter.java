@@ -1,18 +1,14 @@
 package date;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 
 import exceptions.InvalidDateInput;
 
 /**
  * Class meant to convert the date into a better format.
- *
- * Okay for now.
+ * @author: Ong Li Min
  */
 public class DateConverter {
 

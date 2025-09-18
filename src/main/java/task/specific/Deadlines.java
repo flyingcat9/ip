@@ -10,7 +10,7 @@ import task.Task;
  * @author Ong Li Min
  */
 public class Deadlines extends Task {
-    private String deadline;
+    private final String deadline;
 
     /**
      * Creating a new Deadline

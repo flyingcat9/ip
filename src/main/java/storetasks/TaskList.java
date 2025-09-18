@@ -15,6 +15,7 @@ import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
 import exceptions.InvalidElementInList;
 import exceptions.InvalidInput;
+import exceptions.NoDeadlineProvided;
 import storage.StoringList;
 import task.Task;
 import task.specific.Deadlines;
@@ -46,10 +47,11 @@ public class TaskList {
              * @throws InvalidDateInput date format is invalid
              * @throws InvalidInput the input is invalid
              */
-            public Task pass(ArrayList<String> p) throws InvalidDateInput, InvalidInput {
+            public Task pass(ArrayList<String> p) throws InvalidDateInput,
+                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid {
                 ArrayList<String> tags = new ArrayList<>();
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
-                for (int i = 0; i < p.size(); i++ ) {
+                for (int i = 0; i < p.size(); i++) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
                     } else {
@@ -57,6 +59,9 @@ public class TaskList {
                     }
                 }
                 int indexOfBy = finder(descriptWithoutTags, "/by");
+                if (indexOfBy == -1 || indexOfBy + 1 >= descriptWithoutTags.size()) {
+                    throw new NoDeadlineProvided();
+                }
                 String task = String.join(" ",
                         descriptWithoutTags.subList(1, indexOfBy));
                 DateConverter de = new DateConverter(
@@ -78,11 +83,12 @@ public class TaskList {
              * @throws InvalidDateInput the date format is invalid
              * @throws InvalidInput the input is invalid
              */
-            public Task pass(ArrayList<String> p) throws InvalidDateInput, InvalidInput {
+            public Task pass(ArrayList<String> p) throws InvalidDateInput,
+                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid {
                 ArrayList<String> tags = new ArrayList<>();
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 p.remove(0);
-                for (int i = 0; i < p.size(); i++ ) {
+                for (int i = 0; i < p.size(); i++) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
                     } else {
@@ -104,11 +110,11 @@ public class TaskList {
              * @throws InvalidInput the input is invalid
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
-                    InvalidInput, EventTimelineInvalid {
+                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid {
                 ArrayList<String> tags = new ArrayList<>(); // doing the tagging, might do a subfn later
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 p.remove(0);
-                for (int i = 0; i < p.size(); i++ ) {
+                for (int i = 0; i < p.size(); i++) {
                     if (p.get(i).contains("#")) {
                         tags.add(p.get(i));
                     } else {
@@ -153,8 +159,8 @@ public class TaskList {
             }
             return -1;
         }
-        public abstract Task pass(ArrayList<String> p)
-                throws InvalidInput, InvalidDateInput, EventTimelineInvalid;
+        public abstract Task pass(ArrayList<String> p) throws InvalidDateInput,
+                InvalidInput, NoDeadlineProvided, EventTimelineInvalid;
 
     }
 
@@ -185,7 +191,8 @@ public class TaskList {
      * @throws CannotStore cannot store
      */
     public String addToList(String s) throws EventTimelineInvalid,
-            InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore, DuplicationError {
+            InvalidDateInput, InvalidInput, EmptyList,
+            CannotLoad, CannotStore, DuplicationError, NoDeadlineProvided {
         this.taskList = slist.load();
         s = s.trim();
         String[] p = s.split("\\s+");
@@ -312,9 +319,8 @@ public class TaskList {
     }
 
     /**
-     *
      * @param s the statement
-     * @return
+     * @return the tags
      */
     public String addTag(String[] s) throws CannotLoad, CannotStore,
             InvalidElementInList {
@@ -330,6 +336,14 @@ public class TaskList {
                 + " the current element " + taskList.get(number).toString();
     }
 
+    /**
+     * the ablity to delete a tag
+     * @param s take in the tags
+     * @return the tags
+     * @throws CannotLoad can not load content
+     * @throws CannotStore can not store content
+     * @throws InvalidElementInList element is invalid
+     */
     public String deleteTag(String[] s) throws CannotLoad, CannotStore,
             InvalidElementInList {
         taskList = slist.load();

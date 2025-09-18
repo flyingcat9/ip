@@ -39,7 +39,7 @@ public class DateConverterTest {
             assertEquals("Oct 20 2027", actual);
         } catch (InvalidDateInput e) {
             String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class DateConverterTest {
             assertEquals("", actual);
         } catch (InvalidDateInput e) {
             String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ public class DateConverterTest {
             assertEquals("", actual);
         } catch (InvalidDateInput e) {
             String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ public class DateConverterTest {
             assertEquals("", actual);
         } catch (InvalidDateInput e) {
             String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ public class DateConverterTest {
             assertEquals("", actual);
         } catch (InvalidDateInput e) {
             String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 }

@@ -4,10 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import date.DateConverter;
 import exceptions.EventTimelineInvalid;
-import exceptions.InvalidDateInput;
 import exceptions.InvalidInput;
+import exceptions.NoDeadlineProvided;
 import storetasks.TaskList;
 
 public class ParserTest {
@@ -15,113 +14,112 @@ public class ParserTest {
     @Test
     public void blankSpace() throws Exception {
         try {
-            Parser t = new Parser();
             TaskList e = new TaskList();
             e.addToList("todo happy birthday");
-            String actual = t.validityOfWords("", e);
+            e.addToList("deadline eat potates /by 2025-04-03");
+            e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
+            String actual = Parser.validityOfWords("", e);
             assertEquals("", actual);
         } catch (InvalidInput e) {
             String expectedErrorOutput = "The input is invalid.";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
     @Test
     public void invalidInput() throws Exception {
         try {
-            Parser t = new Parser();
             TaskList e = new TaskList();
             e.addToList("todo happy birthday");
             e.addToList("deadline eat potates /by 2025-04-03");
             e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
-            String actual = t.validityOfWords("hiiiiiii", e);
+            String actual = Parser.validityOfWords("hiiiiiii", e);
             assertEquals("", actual);
         } catch (InvalidInput e) {
             String expectedErrorOutput = "The input is invalid.";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
     @Test
     public void invalidEventTime() throws Exception {
         try {
-            Parser t = new Parser();
             TaskList e = new TaskList();
             e.addToList("todo happy birthday");
             e.addToList("deadline eat potates /by 2025-04-03");
             e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
-            String actual = t.validityOfWords("event eat lunch /from 2025-04-03 /to 2025-04-05", e);
+            String actual = Parser.validityOfWords("event eat lunch "
+                            + "/from 2025-04-03 /to 2025-04-02", e);
             assertEquals("", actual);
         } catch (EventTimelineInvalid e) {
             String expectedErrorOutput = "Your starting date is after your ending date";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
     @Test
-    public void noDeeadlineProvided() throws Exception {
+    public void noDeadlineProvided() throws Exception {
         try {
-            Parser t = new Parser();
             TaskList e = new TaskList();
             e.addToList("todo happy birthday");
             e.addToList("deadline eat potates /by 2025-04-03");
-            e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-02");
-            String actual = t.validityOfWords("deadline do CS2100 homework", e);
+            e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
+            String actual = Parser.validityOfWords("deadline do CS2100 homework", e);
             assertEquals("", actual);
-        } catch (EventTimelineInvalid e) {
-            String expectedErrorOutput = "Your starting date is after your ending date";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+        } catch (NoDeadlineProvided e) {
+            String expectedErrorOutput = "No deadline is provided, please add one.";
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
     @Test
     public void noEndingTimeForEvent() throws Exception {
         try {
-            Parser t = new Parser();
             TaskList e = new TaskList();
             e.addToList("todo happy birthday");
             e.addToList("deadline eat potates /by 2025-04-03");
             e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-02");
-            String actual = t.validityOfWords("deadline do CS2100 homework", e);
+            String actual = Parser.validityOfWords("event do CS2100 "
+                    + "homework /from 2025-04-03", e);
             assertEquals("", actual);
         } catch (EventTimelineInvalid e) {
             String expectedErrorOutput = "Your starting date is after your ending date";
-            assertEquals(e.getMessage(), expectedErrorOutput);
+            assertEquals(expectedErrorOutput, e.getMessage());
         }
     }
 
     @Test
-    public void addingTodoObject () throws Exception {
-        try {
-            Parser t = new Parser();
-            TaskList e = new TaskList();
-            e.addToList("todo happy birthday");
-            e.addToList("deadline eat potates /by 2025-04-03");
-            e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-02");
-            String actual = t.validityOfWords("deadline do CS2100 homework", e);
-            assertEquals("", actual);
-        } catch (EventTimelineInvalid e) {
-            String expectedErrorOutput = "Your starting date is after your ending date";
-            assertEquals(e.getMessage(), expectedErrorOutput);
-        }
+    public void addingValidTodo() throws Exception {
+        TaskList e = new TaskList();
+        e.addToList("todo happy birthday");
+        e.addToList("deadline eat potates /by 2025-04-03");
+        e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
+        String actual = Parser.validityOfWords("todo do CS2100 homework", e);
+        assertEquals("Got it, I have added this to my list!\n"
+                + "[ToDo]  [O] do CS2100 homework ", actual);
     }
 
     @Test
-    public void addingDeadlineObject () throws Exception {
-        try {
-            Parser t = new Parser();
-            TaskList e = new TaskList();
-            e.addToList("todo happy birthday");
-            e.addToList("deadline eat potates /by 2025-04-03");
-            e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-02");
-            String actual = t.validityOfWords("deadline do CS2100 homework", e);
-            assertEquals("", actual);
-        } catch (EventTimelineInvalid e) {
-            String expectedErrorOutput = "Your starting date is after your ending date";
-            assertEquals(e.getMessage(), expectedErrorOutput);
-        }
+    public void addingValidDeadline() throws Exception {
+        TaskList e = new TaskList();
+        e.addToList("todo happy birthday");
+        e.addToList("deadline eat potates /by 2025-04-03");
+        e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
+        String actual = Parser.validityOfWords("deadline do CS2100 "
+                + "homework /by 2025-05-04", e);
+        assertEquals("Got it, I have added this to my list!\n"
+                + "[Deadline] [O] do CS2100 homework  (by: May 4 2025)", actual);
     }
 
-
-
+    @Test
+    public void addingValidEvent() throws Exception {
+        TaskList e = new TaskList();
+        e.addToList("todo happy birthday");
+        e.addToList("deadline eat potates /by 2025-04-03");
+        String actual = Parser.validityOfWords("event eat lunch /from "
+                + "2025-04-03 /to 2025-04-05", e);
+        assertEquals("Got it, I have added this to my list!\n"
+                + "[Events] [O] eat lunch  (from: Apr 3 2025 to: "
+                + "Apr 5 2025) ", actual);
+    }
 }

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * A GUI for Duke using FXML.
  */
 public class MainScene extends Application {
-    private Jocelyn jocelyn = new Jocelyn();
+    private final Jocelyn jocelyn = new Jocelyn();
 
     /**
      * Starting the home page for the chatbot.
