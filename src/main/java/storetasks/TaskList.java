@@ -3,10 +3,13 @@ package storetasks;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import date.DateConverter;
 import exceptions.CannotLoad;
 import exceptions.CannotStore;
+import exceptions.DuplicationError;
 import exceptions.EmptyList;
 import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
@@ -172,6 +175,7 @@ public class TaskList {
 
     /**
      * the method to add the task to the list
+     * Used AI for guidance on the easiest method to preserve duplicates.
      * @param s the thing to be added
      * @return the string related to adding
      * @throws InvalidDateInput date input invalid
@@ -181,14 +185,19 @@ public class TaskList {
      * @throws CannotStore cannot store
      */
     public String addToList(String s) throws EventTimelineInvalid,
-            InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore {
+            InvalidDateInput, InvalidInput, EmptyList, CannotLoad, CannotStore, DuplicationError {
         this.taskList = slist.load();
         s = s.trim();
         String[] p = s.split("\\s+");
         String stringy = "Got it, I have added this to my list!\n";
         ArrayList<String> a = new ArrayList<>(Arrays.asList(p));
         Task newObject = checkerOfCommand(p[0]).pass(a);
-        this.taskList.add(newObject);
+        Set<Task> theSet = new LinkedHashSet<>(taskList);
+        boolean b = theSet.add(newObject);
+        if (!b) {
+            throw new DuplicationError();
+        }
+        taskList = new ArrayList<Task>(theSet);
         slist.store(this.taskList);
         return stringy + newObject.toString();
     }
@@ -334,5 +343,7 @@ public class TaskList {
         return "Got it, I have remove the tags for task " + number + ".\n This is  "
                 + " the current element " + taskList.get(number).toString();
     }
+
+
 }
 

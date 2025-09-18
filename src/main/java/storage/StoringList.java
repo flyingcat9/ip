@@ -48,7 +48,7 @@ public class StoringList {
                 String t = nextLiner.nextLine();
                 String[] p = t.split("\"\"");
                 ArrayList<String> arraylist = new ArrayList<>(Arrays.asList(p));
-                assert p.length >= 3 : "the input of the task is invalid";
+                assert p.length >= 1 : "the input of the task is invalid";
                 boolean finished = arraylist.get(1).contains("[X]");
                 String description = "";
                 String deadline = "";

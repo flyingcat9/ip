@@ -27,4 +27,67 @@ public class DateConverterTest {
         String actual = t.toString();
         assertEquals("Oct 20 2027", actual);
     }
+
+
+    // Solution below adapted from
+    // https://stackoverflow.com/questions/10148101/junit-testing-assertequals-for-exception
+    @Test
+    public void nonexistentDate() throws InvalidDateInput {
+        try {
+            DateConverter t = new DateConverter("2025-02-30");
+            String actual = t.toString();
+            assertEquals("Oct 20 2027", actual);
+        } catch (InvalidDateInput e) {
+            String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
+            assertEquals(e.getMessage(), expectedErrorOutput);
+        }
+    }
+
+    @Test
+    public void noDateSpecified() throws InvalidDateInput {
+        try {
+            DateConverter t = new DateConverter("2025-02-30");
+            String actual = t.toString();
+            assertEquals("", actual);
+        } catch (InvalidDateInput e) {
+            String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
+            assertEquals(e.getMessage(), expectedErrorOutput);
+        }
+    }
+
+    @Test
+    public void invalidYear() throws InvalidDateInput {
+        try {
+            DateConverter t = new DateConverter("20-02-30");
+            String actual = t.toString();
+            assertEquals("", actual);
+        } catch (InvalidDateInput e) {
+            String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
+            assertEquals(e.getMessage(), expectedErrorOutput);
+        }
+    }
+
+    @Test
+    public void invalidMonth() throws InvalidDateInput {
+        try {
+            DateConverter t = new DateConverter("2005-13-30");
+            String actual = t.toString();
+            assertEquals("", actual);
+        } catch (InvalidDateInput e) {
+            String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
+            assertEquals(e.getMessage(), expectedErrorOutput);
+        }
+    }
+
+    @Test
+    public void invalidDate() throws InvalidDateInput {
+        try {
+            DateConverter t = new DateConverter("2005-13-33");
+            String actual = t.toString();
+            assertEquals("", actual);
+        } catch (InvalidDateInput e) {
+            String expectedErrorOutput = "Invalid date input, please format as YYYY-DD-MM";
+            assertEquals(e.getMessage(), expectedErrorOutput);
+        }
+    }
 }

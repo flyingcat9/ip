@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import exceptions.CannotLoad;
 import exceptions.CannotStore;
+import exceptions.DuplicationError;
 import exceptions.EmptyList;
 import exceptions.EventTimelineInvalid;
 import exceptions.InvalidDateInput;
@@ -128,7 +129,7 @@ public class Parser {
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
-                    CannotLoad, EventTimelineInvalid, InvalidElementInList {
+                    CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError {
                 return e.addToList(String.join(" ", statement));
             }
         },
@@ -169,7 +170,7 @@ public class Parser {
         public abstract String run(TaskList e, String ... statement) throws
                 EventTimelineInvalid, InvalidDateInput,
                 InvalidInput, EmptyList, CannotStore, CannotLoad,
-                InvalidElementInList;
+                InvalidElementInList, DuplicationError;
     }
 
     /**
@@ -202,7 +203,8 @@ public class Parser {
      */
     public static String validityOfWords(String s, TaskList e) throws
             EventTimelineInvalid, InvalidInput, EmptyList,
-            InvalidDateInput, CannotStore, CannotLoad, InvalidElementInList {
+            InvalidDateInput, CannotStore, CannotLoad, InvalidElementInList,
+            DuplicationError {
         s = s.trim();
         // split the statement
         // basically p is the user string in an array
