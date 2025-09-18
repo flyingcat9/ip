@@ -1,21 +1,20 @@
-# chatbot.Jocelyn User Guide
+# Jocelyn User Guide
 
-// Update the title above to match the actual product name
+![img.png](img.png)
 
-// Product screenshot goes here
-
-// Product intro goes here
+Use Jocelyn, the newest Chatbot that allows you 
+to keep tracking of everything, whether it be 
+events, deadlines or event todo items!
 
 ## Adding deadlines
 
-// Describe the action and its outcome.
+Add a deadline to the list of tasks. 
 
-// Give examples of usage
+Format: deadline deadline_task /by YYYY-MM-DD
 
-Example: `keyword (optional arguments)`
+Example: `deadline do homework /by 2025-09-30`
 
-// A description of the expected outcome goes here
-
+By doing this, you are able to add a task. 
 ```
 expected output
 ```

@@ -25,6 +25,7 @@ public class MainScene extends Application {
                     MainScene.class.getResource("/view/TheMainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setTitle("Jocelyn");
             stage.setScene(scene);
             TheMainWindow con = fxmlLoader.getController();
             con.setJocelyn(jocelyn);
