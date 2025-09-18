@@ -53,6 +53,7 @@ public class DialogChatBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        dialog.getStyleClass().add("reply-label");
     }
 
     public static DialogChatBox getUserDialog(String text, Image img) {
