@@ -23,6 +23,7 @@ public class StoringList {
 
     /**
      * In charge of loading the list
+     * Used ChatGPT to store the list better.
      * @return the final updated list from the file
      * @throws CannotLoad cannot load the list
      */

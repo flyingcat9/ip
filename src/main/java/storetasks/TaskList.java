@@ -26,7 +26,6 @@ import task.specific.ToDo;
  */
 
 public class TaskList {
-
     private StoringList slist = new StoringList();
     private ArrayList<Task> taskList = new ArrayList<>();
     private int lengthOfList = taskList.size();
