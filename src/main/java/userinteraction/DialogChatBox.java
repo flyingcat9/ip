@@ -3,7 +3,6 @@ package userinteraction;
 import java.io.IOException;
 import java.util.Collections;
 
-import chatbot.Jocelyn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,7 +23,7 @@ public class DialogChatBox extends HBox {
     private Label dialog;
     @FXML
     private ImageView displayPicture;
-    private final Jocelyn jocelyn = new Jocelyn();
+    private final chatbot.Jocelyn jocelyn = new chatbot.Jocelyn();
 
     /**
      * Creating a new instance of a dialog chat box
@@ -60,7 +59,7 @@ public class DialogChatBox extends HBox {
         return new DialogChatBox(text, img);
     }
 
-    public static DialogChatBox getDukeDialog(String text, Image img) {
+    public static DialogChatBox getJocelynDialog(String text, Image img) {
         var db = new DialogChatBox(text, img);
         db.flip();
         return db;

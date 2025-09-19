@@ -34,7 +34,7 @@ public class StoringList {
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        File theFile = new File(directory, "Jocelyn.txt");
+        File theFile = new File(directory, "chatbot.Jocelyn.txt");
         if (!theFile.exists()) {
             try {
                 theFile.createNewFile();
@@ -94,7 +94,7 @@ public class StoringList {
     public void store(ArrayList<Task> t) throws CannotStore {
         try {
             File directory = new File("theData");
-            File theFinalFile = new File(directory, "Jocelyn.txt");
+            File theFinalFile = new File(directory, "chatbot.Jocelyn.txt");
             FileWriter a = new FileWriter(theFinalFile, false);
             for (Task theTask : t) {
                 a.write(theTask.store() + "\n");

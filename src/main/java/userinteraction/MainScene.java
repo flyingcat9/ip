@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * A GUI for Duke using FXML.
  */
 public class MainScene extends Application {
-    private final Jocelyn jocelyn = new Jocelyn();
+    private final chatbot.Jocelyn jocelyn = new Jocelyn();
 
     /**
      * Starting the home page for the chatbot.
@@ -25,7 +25,7 @@ public class MainScene extends Application {
                     MainScene.class.getResource("/view/TheMainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
-            stage.setTitle("Jocelyn");
+            stage.setTitle("chatbot.Jocelyn");
             stage.setScene(scene);
             TheMainWindow con = fxmlLoader.getController();
             con.setJocelyn(jocelyn);

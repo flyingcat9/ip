@@ -1,8 +1,8 @@
-# Jocelyn User Guide
+# chatbot.Jocelyn User Guide
 
 ![img.png](img.png)
 
-Use Jocelyn, the newest Chatbot that allows you 
+Use chatbot.Jocelyn, the newest Chatbot that allows you 
 to keep tracking of everything, whether it be 
 events, deadlines or event todo items!
 

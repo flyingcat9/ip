@@ -47,15 +47,19 @@ public class TheMainWindow extends AnchorPane {
     }
 
     /**
-     * This creates a new Jocelyn instance.
+     * This creates a new chatbot.Jocelyn instance.
      */
     public void setJocelyn(Jocelyn jocelyn) {
         this.jocelyn = jocelyn;
+        String input = jocelyn.introduce();
+        dialogContainer.getChildren().addAll(
+                DialogChatBox.getJocelynDialog(input, jocelynImage));
+
     }
 
     /**
      * handleUserInput creates two dialog boxes, one echoing user input and the other
-     * containing Jocelyn's reply and then appends them to
+     * containing chatbot.Jocelyn's reply and then appends them to
      * the dialog container. After processing, the user box is
      * cleared.
      */
@@ -74,7 +78,7 @@ public class TheMainWindow extends AnchorPane {
             if (!response.equals("BYEBYEBYE")) {
                 dialogContainer.getChildren().addAll(
                         DialogChatBox.getUserDialog(input, userImage),
-                        DialogChatBox.getDukeDialog(response, jocelynImage));
+                        DialogChatBox.getJocelynDialog(response, jocelynImage));
                 userInput.clear();
             } else {
                 s.close();

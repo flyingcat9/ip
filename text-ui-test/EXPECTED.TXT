@@ -1,2 +1,11 @@
-Hello! I'm chatbot.Jocelyn. What can I do for you?
-Bye, I hope to see you soon!
+Woof, woof. My name is Jocelyn. Please feel free to type in any tasks you want!
+Got it, I have added this to my list!
+[ToDo] [O] eat
+Now, you have 3 objects in your list right now.
+The input is invalid.
+The input is invalid.
+No deadline is provided, please add one.
+This input is invalid.
+Got it, I have added this to my list!
+[ToDo] [O] sing
+Now, you have 4 objects in your list right now.

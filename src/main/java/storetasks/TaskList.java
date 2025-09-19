@@ -206,7 +206,8 @@ public class TaskList {
         }
         taskList = new ArrayList<Task>(theSet);
         slist.store(this.taskList);
-        return stringy + newObject.toString();
+        return stringy + newObject.toString() + "\nNow, you have " + taskList.size()
+                + " objects in your list right now!";
     }
 
 

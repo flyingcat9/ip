@@ -26,4 +26,13 @@ public class Jocelyn {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * introduces the user when they log into the gui
+     * @return String
+     */
+    public String introduce() {
+        return "Woof, woof. My name is Jocelyn. "
+                + "Please feel free to type in any tasks you want!";
+    }
 }

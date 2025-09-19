@@ -41,7 +41,7 @@ public class UserInput {
      * @return string greeting the user
      */
     public String greet() {
-        return "Hello! I'm Jocelyn. What can I do for you?";
+        return "Hello! I'm chatbot.Jocelyn. What can I do for you?";
     }
 
     /**
