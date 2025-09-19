@@ -9,17 +9,20 @@ import exceptions.InvalidElementInList;
 import task.Task;
 
 /**
- * This class is meant for tasks that have deadlines.
- *
- * @author Ong Li Min
+ * Creates Deadline objects that are then later added into the task list.
+ * A deadline must always have a deadline since if not, it is not considered
+ * to be a deadline.
  */
 public class Deadlines extends Task {
     private final LocalDate deadline;
 
     /**
-     * Creating a new Deadline
-     * @param description description of a deadline task
-     * @param deadline when the task must be done
+     * Creates a new Deadline object.
+     *
+     * @param description Description of a deadline task provided by the user.
+     * @param deadline When the task must be done also specified by the user.
+     * @throws InvalidElementInList If an element does not exist.
+     * @throws InvalidDateInput If the user input the date wrongly.
      */
     public Deadlines(String description, String deadline) throws InvalidElementInList, InvalidDateInput {
         super(description);
@@ -32,10 +35,12 @@ public class Deadlines extends Task {
     }
 
     /**
-     * Create a new Deadline
-     * @param description description of the deadline
-     * @param deadline when the task should be done
-     * @param finishStatus whether it has been completed or not
+     * Create a new Deadline with a different constructor.
+     * @param description Description of the deadline.
+     * @param deadline When the task should be done specified by the user.
+     * @param finishStatus Whether it has been completed or not specified by the user.
+     * @throws InvalidElementInList If an element does not exist.
+     * @throws InvalidDateInput If the user input the date wrongly.
      */
     public Deadlines(String description, String deadline, boolean finishStatus)
             throws InvalidElementInList, InvalidDateInput {
@@ -50,10 +55,12 @@ public class Deadlines extends Task {
 
 
     /**
-     * Create a new Deadline
-     * @param description description of the deadline
-     * @param deadline when the task should be done
-     * @param finishStatus whether it has been completed or not
+     * Create a new Deadline with a different constructor.
+     * @param description Description of the deadline.
+     * @param deadline When the task should be done specified by the user.
+     * @param finishStatus Whether it has been completed or not.
+     * @throws InvalidElementInList If an element does not exist.
+     * @throws InvalidDateInput If the user input the date wrongly.
      */
     public Deadlines(String description, String deadline, boolean finishStatus,
                      ArrayList<String> tags) throws InvalidElementInList, InvalidDateInput {
@@ -67,8 +74,7 @@ public class Deadlines extends Task {
     }
 
     /**
-     * Return the String for a Deadline task
-     * @return a string
+     * Return the String for a Deadline task.
      */
     public String toString() {
         String e = this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
@@ -76,12 +82,18 @@ public class Deadlines extends Task {
                 + super.taggedToPrint();
     }
 
+    /**
+     * Stores the user list into the stated document as specified in storage.
+     */
     @Override
     public String store() {
         return "[Deadline]\"\"" + super.store()
                 + "\\by" + deadline.toString() + "\"\"" + super.taggedStrings();
     }
 
+    /**
+     * Returns the deadline in it's toString() format.
+     */
     public String getDeadline() {
         return this.deadline.toString();
     }

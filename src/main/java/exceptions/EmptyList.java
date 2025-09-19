@@ -1,17 +1,14 @@
 package exceptions;
 
 /**
- * Error if the list is empty.
- *
- * @author Ong Li Min
+ * Throws an error is the user tries to act on an empty list.
  */
 
 public class EmptyList extends Exception {
     protected String message;
 
     /**
-     * Constructor for an empty list.
-     *
+     * Creates an EmptyList error.
      */
     public EmptyList() {
         super("The list is empty, you can not "

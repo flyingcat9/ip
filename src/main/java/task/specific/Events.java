@@ -12,19 +12,22 @@ import task.Task;
 
 /**
  * This class represents an event. In other words, there is a
- * starting and an ending time.
- * NTS: add a comparator to compare startingTime and endingTime
- * @author: Ong Li Min
+ * starting and an ending time. Events will then be added to the
+ * TaskList in the future.
  */
 public class Events extends Task {
     private final LocalDate startingTime;
     private final LocalDate endingTime;
 
     /**
-     * Creating an event.
-     * @param description description of event
-     * @param sT starting time
-     * @param eT ending time
+     * Creates an event with the constuctor.
+     *
+     * @param description Description of the event.
+     * @param sT Starting time of the event specified by the user.
+     * @param eT Dnding time of the event specified by the user.
+     * @throws InvalidElementInList It is acting on a nonexistent string.
+     * @throws InvalidDateInput The user's format for the date is incorrect.
+     * @throws EventTimelineInvalid The user's starting time is after the ending time.
      */
     public Events(String description, String sT, String eT) throws
             InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
@@ -41,10 +44,16 @@ public class Events extends Task {
     }
 
     /**
-     * Creating an event.
-     * @param description description of event
-     * @param sT starting time
-     * @param eT ending time
+     * Creates an event with the constuctor givne the parameters
+     *
+     * @param description Description of the event.
+     * @param sT Starting time of the event specified by the user.
+     * @param eT Dnding time of the event specified by the user.
+     * @param finishType Whether the event has passed.
+     * @param tags All the tags that the event is associated with.
+     * @throws InvalidElementInList It is acting on a nonexistent string.
+     * @throws InvalidDateInput The user's format for the date is incorrect.
+     * @throws EventTimelineInvalid The user's starting time is after the ending time.
      */
     public Events(String description, String sT, String eT, boolean finishType,
                   ArrayList<String> tags) throws
@@ -64,11 +73,15 @@ public class Events extends Task {
     }
 
     /**
-     * Another constructor for the events
-     * @param description description of the task
-     * @param sT starting time
-     * @param eT ending time
-     * @param finishResult of whether it has been completed or not
+     * Creates an event with the constuctor givne the parameters
+     *
+     * @param description Description of the event.
+     * @param sT Starting time of the event specified by the user.
+     * @param eT Dnding time of the event specified by the user.
+     * @param finishResult Whether the event has passed.
+     * @throws InvalidElementInList It is acting on a nonexistent string.
+     * @throws InvalidDateInput The user's format for the date is incorrect.
+     * @throws EventTimelineInvalid The user's starting time is after the ending time.
      */
     public Events(String description, String sT, String eT, boolean finishResult)
             throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
@@ -86,20 +99,24 @@ public class Events extends Task {
         }
     }
 
-
+    /**
+     * Returns the ending time given its toString().
+     */
     public String getEndingTime() {
         assert this.endingTime != null : "the ending time is null";
         return this.endingTime.toString();
     }
 
+    /**
+     * Returns the starting time given its toString().
+     */
     public String getStaringTime() {
         assert this.startingTime != null : "the starting time is null";
         return this.startingTime.toString();
     }
 
     /**
-     * returns a string
-     * @return the string
+     * Returns the deadline object represented as a string.
      */
     public String toString() {
         String stringStarting = this.startingTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
@@ -110,8 +127,7 @@ public class Events extends Task {
     }
 
     /**
-     * returns the stored way
-     * @return stored method
+     * Returns the deadline object represented as a string and stored inside of the document.
      */
     @Override
     public String store() {

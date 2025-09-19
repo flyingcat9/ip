@@ -15,22 +15,23 @@ import exceptions.NoDeadlineProvided;
 import storetasks.TaskList;
 
 /**
- * Class in charge of validating the user commands
- *
- * @author Ong Li Min
+ * Validates everything that the user types in throughout the chatbot.
+ * If the input is invalid, then an error is thrown and the user is notiifed of the error
+ * so that they can fix their resopnse.
  */
 public class Parser {
 
     /**
-     * Enum class in charge of splitting the different commands.
+     * The enum class is in charge of splitting the commands into different categories.
      */
     public enum Commands {
         LIST {
             /**
-             * prints out the list
-             * @param e the TaskList you are working on
-             * @param statement user statement
-             * @return string comment.
+             * Returns the printed out list to the user on the GUI
+             *
+             * @param e The TaskList that contains the user's tasks.
+             * @param statement The user statement from the GUI.
+             * @return The printed out list.
              */
             public String run(TaskList e, String ... statement) throws
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,

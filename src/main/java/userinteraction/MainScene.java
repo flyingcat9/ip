@@ -8,10 +8,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * A Graphical User Interface for Duke using FXML.
+ * It sets the scene of the GUI so that it makes it easier
+ * for the user.
  */
 public class MainScene extends Application {
-    private final chatbot.Jocelyn jocelyn = new Jocelyn();
+    private final Jocelyn jocelyn = new Jocelyn();
 
     /**
      * Starting the home page for the chatbot.

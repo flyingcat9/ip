@@ -1,16 +1,14 @@
 package exceptions;
 
 /**
- * Error if the list is empty.
- *
- * @author Ong Li Min
+ * CannotLoad is thrown if the list can not be loaded from the document.
  */
-
 public class CannotLoad extends Exception {
     protected String message;
 
     /**
-     * Constructor for an empty list.
+     * Creates a CannotLoad Error.
+     * This is only thrown if it does not work.
      *
      */
     public CannotLoad() {

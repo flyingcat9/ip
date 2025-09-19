@@ -13,7 +13,9 @@ import storage.StoringList;
 public class Jocelyn {
 
     /**
-     * Main chat bot.
+     * Creates the main chatbot Jocelyn.
+     * This loads the document into the tasklist so that it is
+     * updated.
      */
     public Jocelyn() {
         StoringList a = new StoringList();
@@ -27,8 +29,10 @@ public class Jocelyn {
     }
 
     /**
-     * introduces the user when they log into the gui
-     * @return String
+     * Returns the greeting message.
+     * Introduces the bot to the user when they log into the GUI.
+     *
+     * @return Introduction String.
      */
     public String introduce() {
         return "Woof, woof. My name is Jocelyn. "

@@ -18,23 +18,28 @@ import task.specific.Events;
 import task.specific.ToDo;
 
 /**
- * In charge of loading and saving things in the file.
+ * This class is in charge of storing the user tasks into the file.
+ * At the start, the file is either loaded or created from scratch.
+ * After every action, the TaskList is stored back into the file
+ * so that the state present in the document is the most accurage.
  *
  */
 
 public class StoringList {
 
     /**
-     * In charge of loading the list
+     * In charge of loading the list from Jocelyn.txt.
      * Used ChatGPT to store the list better in terms for format.
-     * @return the final updated list from the file
-     * @throws CannotLoad cannot load the list
+     * @return The final updated list from the file.
+     * @throws CannotLoad Cannot load the list.
+     * @throws InvalidDateInput User inputted the date with an inproper format.
+     * @throws InvalidElementInList It is acting on an invalid element.
+     * @throws EventTimelineInvalid User inputted an invalid timeframe.
      */
     public ArrayList<Task> load() throws CannotLoad, InvalidElementInList,
             InvalidDateInput, EventTimelineInvalid {
         File directory = new File("theData");
         ArrayList<Task> theList = new ArrayList<>();
-        // make directory if it does not exist
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -92,8 +97,9 @@ public class StoringList {
     }
 
     /**
-     * Storing the updated list into the .txt file
-     * @param t the ArrayList you are updating
+     * Stores the updated list into the .txt file.
+     *
+     * @param t The ArrayList that you update every step.
      */
     public void store(ArrayList<Task> t) throws CannotStore {
         try {

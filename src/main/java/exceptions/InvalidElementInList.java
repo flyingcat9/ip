@@ -1,16 +1,14 @@
 package exceptions;
 
 /**
- * Error happens if the input is invalid.
- *
- * @author Ong Li Min
+ * Thorws error if the input does not have a task.
  */
 
 public class InvalidElementInList extends Exception {
     protected String message;
 
     /**
-     * Error for invalid input.
+     * Creates an InvalidElementInList error.
      */
     public InvalidElementInList() {
         super("Please input a task!");

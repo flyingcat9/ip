@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import exceptions.InvalidElementInList;
 
 /**
- * This class represents a task that needs to be done.
- *
- * @author: Ong Li Min
+ * Creates a task object for the user.
+ * There are 3 classes that child classes for this class.
  */
 public class Task {
     protected String descript;
-    protected Boolean progressStatus;
+    protected Boolean isFinished;
     protected ArrayList<String> tags = new ArrayList<>();
 
     /**
-     * Creates a task
-     * @param d description
-     * @param p progress
-     * @param tag tags it's associated with
+     * Creates a task in the constuctor.
+     * @param d Description of the task given by the user.
+     * @param p Progress of the task.
+     * @param tag The tags that the task is associated with.
+     * @throws InvalidElementInList Acting on an invalid element in the list.
      */
     public Task(String d, Boolean p, ArrayList<String> tag) throws InvalidElementInList {
         for (int i = 0; i < tag.size(); i++) {
@@ -28,84 +28,74 @@ public class Task {
             throw new InvalidElementInList();
         }
         this.descript = d;
-        this.progressStatus = p;
+        this.isFinished = p;
     }
 
 
     /**
-     * Creates a task
-     * @param d description
-     * @param p progress
+     * Creates a task in the constuctor.
+     * @param d Description of the task given by the user.
+     * @param p Progress of the task.
+     * @throws InvalidElementInList Acting on an invalid element in the list.
      */
     public Task(String d, Boolean p) throws InvalidElementInList {
         if (descript.equals("")) {
             throw new InvalidElementInList();
         }
         this.descript = d;
-        this.progressStatus = p;
+        this.isFinished = p;
     }
 
     /**
-     * Creates a new task
-     * @param d description
+     * Creates a task in the constuctor.
+     * @param d Description of the task given by the user.
+     * @throws InvalidElementInList Acting on an invalid element in the list.
      */
     public Task(String d) throws InvalidElementInList {
         if (descript.equals("")) {
             throw new InvalidElementInList();
         }
         descript = d;
-        progressStatus = false;
+        isFinished = false;
     }
 
     /**
-     * Returns the status
-     * @return the string as provided
+     * Returns the status of the task at the moment.
      */
     public String getProgressStatus() {
-        assert progressStatus != null : "progress status is null.";
-        if (progressStatus.equals(false)) {
+        assert isFinished != null : "progress status is null.";
+        if (isFinished.equals(false)) {
             return "O";
         }
         return "X";
     }
 
     /**
-     * marks task as completed
+     * Marks the status of the task as being completed.
      */
     public void mark() {
-        assert progressStatus != null : "progress status is null";
-        this.progressStatus = true;
+        assert isFinished != null : "progress status is null";
+        this.isFinished = true;
     }
 
     /**
-     * unmarks the task
+     * Unmarks the status of the task as being completed.
      */
     public void unMark() {
-        assert progressStatus != null : "progress status is null";
-        this.progressStatus = false;
+        assert isFinished != null : "progress status is null";
+        this.isFinished = false;
     }
 
-    /**
-     * Returns the task as a toString
-     * @return nicely formatted String
-     */
     public String toString() {
         return " [" + this.getProgressStatus() + "] " + this.descript + " ";
     }
 
-
-
-    /**
-     * Used ChatGPT's idea of using a separate method
-     * @return stored way
-     */
     public String store() {
         return "[" + this.getProgressStatus() + "]\"\"" + this.descript + "\"\"";
     }
 
     /**
-     * returns tags as strings
-     * @return tagged Strings
+     * Returns the tags as strings nicely formatted.
      */
     public String taggedStrings() {
         String s = "";
@@ -116,8 +106,7 @@ public class Task {
     }
 
     /**
-     * returns tags as strings
-     * @return String to print
+     * Returns the tags as strings nicely formatted.
      */
     public String taggedToPrint() {
         String s = "";
@@ -128,8 +117,8 @@ public class Task {
     }
 
     /**
-     * Add tags to an element in the tasklist
-     * @param theTags any tags the user wants to add
+     * Add tags to an element to the user's TaskList.
+     * @param theTags Any tags the user wants to add to the task.
      */
     public void addTags(String[] theTags) {
         for (int i = 0; i < theTags.length; i++) {
@@ -138,8 +127,8 @@ public class Task {
     }
 
     /**
-     * Delete/remove tags to elements in the tasklist.
-     * @param theTags any tags the user wants to remove
+     * Delete/remove tags to elements in the TaskList.
+     * @param theTags Any tags the user wants to remove to the task.
      */
     public void removeTags(String[] theTags) {
         for (int i = 0; i < theTags.length; i++) {

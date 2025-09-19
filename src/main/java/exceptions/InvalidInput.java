@@ -1,16 +1,14 @@
 package exceptions;
 
 /**
- * Error happens if the input is invalid.
- *
- * @author Ong Li Min
+ * Throws error if user input is invalid.
  */
 
 public class InvalidInput extends Exception {
     protected String message;
 
     /**
-     * Error for invalid input.
+     * Creates a new InvalidInput() error.
      */
     public InvalidInput() {
         super("The input is invalid.");

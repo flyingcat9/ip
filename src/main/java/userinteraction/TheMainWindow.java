@@ -15,7 +15,8 @@ import storetasks.TaskList;
 /**
  * This is the controller for the main graphical
  * user interface.
- * Both images are taken directly from Pixabay.
+ * Both images are taken directly from Pixabay, which is
+ * an open source image website.
  */
 public class TheMainWindow extends AnchorPane {
     @FXML // in order to make it private and not public
@@ -47,7 +48,7 @@ public class TheMainWindow extends AnchorPane {
     }
 
     /**
-     * This creates a new chatbot.Jocelyn instance.
+     * This creates a new Jocelyn instance.
      */
     public void setJocelyn(Jocelyn jocelyn) {
         this.jocelyn = jocelyn;
@@ -87,9 +88,9 @@ public class TheMainWindow extends AnchorPane {
     }
 
     /**
-     * checker to see when the input loop stops
-     * @param input input from user
-     * @return whether it is time to stop the loop
+     * Checker to see when the input loop stops.
+     * @param input Input from user.
+     * @return Whether it is time to stop the loop.
      */
     public boolean exitingTheLoop(String input) {
         if (input == null || input.equals("") || input.equals("bye")) {

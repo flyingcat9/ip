@@ -1,17 +1,14 @@
 package exceptions;
 
 /**
- * Error if there are duplications.
- *
- * @author Ong Li Min
+ * This error is supposedly thrown if there are duplicate objects.
  */
 
 public class DuplicationError extends Exception {
     protected String message;
 
     /**
-     * Constructor for an empty list.
-     *
+     * Creates a DuplicateError in this method.
      */
     public DuplicationError() {
         super("The list is empty, you can not "

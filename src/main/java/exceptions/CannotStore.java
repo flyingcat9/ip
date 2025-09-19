@@ -1,17 +1,14 @@
 package exceptions;
 
 /**
- * Error if the list is empty.
- *
- * @author Ong Li Min
+ * This error is thrown if the contents can not be stored.
  */
 
 public class CannotStore extends Exception {
     protected String message;
 
     /**
-     * Constructor for an empty list.
-     *
+     * This creates a CannotStore error.
      */
     public CannotStore() {
         super("Unable to store content.");

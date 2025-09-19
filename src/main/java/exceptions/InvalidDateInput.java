@@ -1,16 +1,14 @@
 package exceptions;
 
 /**
- * Error happens if the input is invalid.
- *
- * @author Ong Li Min
+ * Throws error if the user input for an event or deadline does not match the given.
  */
 
 public class InvalidDateInput extends Exception {
     protected String message;
 
     /**
-     * Error for invalid input.
+     * Creates the invalidDateInput error.
      */
     public InvalidDateInput() {
         super("Invalid date input, please format as YYYY-DD-MM");

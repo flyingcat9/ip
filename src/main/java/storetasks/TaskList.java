@@ -22,9 +22,9 @@ import task.specific.ToDo;
 
 /**
  * This class is in charge of maintaining the task list by adding and
- * removing tasks.
- *
- * @author: Ong Li Min
+ * removing tasks. It can add three types of tasks: Event, Deadline and ToDo.
+ * After every action, the task is then added to the file so that it can be
+ * accessed for the next run.
  */
 
 public class TaskList {
@@ -33,17 +33,18 @@ public class TaskList {
     private int lengthOfList = taskList.size();
 
     /**
-     * Enum to split the different types of tasks.
+     * This enum splits the different types of tasks depending on what the user inputs.
      */
     public enum TaskTypes {
 
         Deadline {
             /**
-             * creates a new deadline
-             * @param p passes in the string
-             * @return the new deadline
-             * @throws InvalidDateInput date format is invalid
-             * @throws InvalidInput the input is invalid
+             * Passes in the parameters to create a new Deadline object.
+             *
+             * @param p Passes in the string.
+             * @return The new deadline.
+             * @throws InvalidDateInput The date format provided by the user is invalid.
+             * @throws InvalidInput The input by the user is invalid.
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
                     InvalidInput, NoDeadlineProvided, EventTimelineInvalid, InvalidElementInList {
@@ -73,11 +74,12 @@ public class TaskList {
         // assumed to only get a todo object
         ToDo {
             /**
-             * adds a new todo object
-             * @param p the user string split as an arraylist
-             * @return the todo object
-             * @throws InvalidDateInput the date format is invalid
-             * @throws InvalidInput the input is invalid
+             * Passes in the parameters to create a new ToDo object.
+             *
+             * @param p Passes in the user string.
+             * @return The new Task object.
+             * @throws InvalidDateInput The date format provided by the user is invalid.
+             * @throws InvalidInput The input by the user is invalid.
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
                     InvalidInput, NoDeadlineProvided, EventTimelineInvalid,
@@ -100,11 +102,12 @@ public class TaskList {
         // assumed to only get events
         Event {
             /**
-             * Passes in an event.
-             * @param p the string comment
-             * @return the event
-             * @throws InvalidDateInput date format is invalid
-             * @throws InvalidInput the input is invalid
+             * Passes in the parameters to create a new Event object.
+             *
+             * @param p Passes in the user string.
+             * @return The new Event object.
+             * @throws InvalidDateInput The date format provided by the user is invalid.
+             * @throws InvalidInput The input by the user is invalid.
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
                     InvalidInput, NoDeadlineProvided, EventTimelineInvalid,
@@ -134,10 +137,11 @@ public class TaskList {
         };
 
         /**
-         * Find string in an array of words
-         * @param array array of words
-         * @param term you are searching for
-         * @return the index of the word
+         * Find a string given an array of words.
+         *
+         * @param array Array of words.
+         * @param term The term you are searching for.
+         * @return The index of the word.
          */
         public static int finder(ArrayList<String> array, String term) {
             for (int i = 0; i < array.size(); i++) {
@@ -153,9 +157,10 @@ public class TaskList {
     }
 
     /**
-     * Checks and validates type of task.
-     * @param s type of task to be added
-     * @return the task
+     * Checks and validates type of task based upon the user parameters.
+     *
+     * @param s Type of task to be added to the list.
+     * @return The specific type of task.
      */
     public TaskTypes checkerOfCommand(String s) {
         for (TaskTypes c: TaskTypes.values()) {
@@ -168,15 +173,12 @@ public class TaskList {
 
 
     /**
-     * the method to add the task to the list
-     * Used AI for guidance on the easiest method to preserve duplicates.
-     * @param s the thing to be added
-     * @return the string related to adding
-     * @throws InvalidDateInput date input invalid
-     * @throws InvalidInput input invalid
-     * @throws EmptyList list is empty
-     * @throws CannotLoad cannot load
-     * @throws CannotStore cannot store
+     * Adds the specified task to the tasklist.
+     *
+     * @param s The thing to be added.
+     * @throws InvalidDateInput The date input by the user is invalid.
+     * @throws InvalidInput The input is invalid.
+     * @throws EmptyList The list is empty.
      */
     public String addToList(String s) throws EventTimelineInvalid,
             InvalidDateInput, InvalidInput, EmptyList,
@@ -203,8 +205,8 @@ public class TaskList {
 
     /**
      * This method marks a task as complete.
-     * @param i this contains the integer of the arraylist that is marked.
-     * @return message
+     *
+     * @param i This contains the integer of the arraylist that is marked.
      */
     public String mark(Integer i) throws CannotLoad, CannotStore,
             InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
@@ -217,9 +219,9 @@ public class TaskList {
     }
 
     /**
-     * This method marks a task as incomplete
-     * @param i this contains the integer of the arraylist marked
-     * @return message to user
+     * This method marks a task as incomplete.
+     *
+     * @param i This contains the integer of the arraylist marked.
      */
     public String unmark(Integer i) throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         try {
@@ -237,8 +239,9 @@ public class TaskList {
     }
 
     /**
-     * This prints out the list in its entirety
-     * @return the list printed out and formatted nicely.
+     * This prints out the list in its entirety.
+     *
+     * @return The list printed out and formatted nicely.
      */
     public String printList() throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         try {
@@ -332,7 +335,8 @@ public class TaskList {
     }
 
     /**
-     * the ablity to delete a tag
+     * The ability to delete a tag.
+     *
      * @param s take in the tags
      * @return the tags
      * @throws CannotLoad can not load content

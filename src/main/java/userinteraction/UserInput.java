@@ -7,9 +7,8 @@ import storetasks.TaskList;
 
 /**
  * This class takes user input and
- * manages the interactions with the user.
- *
- * @author Ong Li Min
+ * manages the interactions with the user. This is mainly
+ * for interaction for before the GUI.
  */
 
 public class UserInput {
