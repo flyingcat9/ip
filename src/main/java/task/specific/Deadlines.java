@@ -1,7 +1,11 @@
 package task.specific;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import exceptions.InvalidDateInput;
+import exceptions.InvalidElementInList;
 import task.Task;
 
 /**
@@ -10,16 +14,21 @@ import task.Task;
  * @author Ong Li Min
  */
 public class Deadlines extends Task {
-    private final String deadline;
+    private final LocalDate deadline;
 
     /**
      * Creating a new Deadline
      * @param description description of a deadline task
      * @param deadline when the task must be done
      */
-    public Deadlines(String description, String deadline) {
+    public Deadlines(String description, String deadline) throws InvalidElementInList, InvalidDateInput {
         super(description);
-        this.deadline = deadline;
+        try {
+            assert deadline != null;
+            this.deadline = LocalDate.parse(deadline);
+        } catch (Exception e) {
+            throw new InvalidDateInput();
+        }
     }
 
     /**
@@ -28,9 +37,15 @@ public class Deadlines extends Task {
      * @param deadline when the task should be done
      * @param finishStatus whether it has been completed or not
      */
-    public Deadlines(String description, String deadline, boolean finishStatus) {
+    public Deadlines(String description, String deadline, boolean finishStatus)
+            throws InvalidElementInList, InvalidDateInput {
         super(description, finishStatus);
-        this.deadline = deadline;
+        try {
+            assert deadline != null;
+            this.deadline = LocalDate.parse(deadline);
+        } catch (Exception e) {
+            throw new InvalidDateInput();
+        }
     }
 
 
@@ -41,9 +56,14 @@ public class Deadlines extends Task {
      * @param finishStatus whether it has been completed or not
      */
     public Deadlines(String description, String deadline, boolean finishStatus,
-                     ArrayList<String> tags) {
+                     ArrayList<String> tags) throws InvalidElementInList, InvalidDateInput {
         super(description, finishStatus, tags);
-        this.deadline = deadline;
+        try {
+            assert deadline != null;
+            this.deadline = LocalDate.parse(deadline);
+        } catch (Exception e) {
+            throw new InvalidDateInput();
+        }
     }
 
     /**
@@ -51,21 +71,18 @@ public class Deadlines extends Task {
      * @return a string
      */
     public String toString() {
-        return "[Deadline]" + super.toString() + " (by: " + deadline + ")"
+        String e = this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        return "[Deadline]" + super.toString() + " (by: " + e + ") "
                 + super.taggedToPrint();
     }
 
-    /**
-     * Used ChatGPT's idea to have a separate idea
-     * for serialization instead of using the toString method.
-     */
     @Override
     public String store() {
         return "[Deadline]\"\"" + super.store()
-                + "\\by" + this.deadline + "\"\"" + super.taggedStrings();
+                + "\\by" + deadline.toString() + "\"\"" + super.taggedStrings();
     }
 
     public String getDeadline() {
-        return this.deadline;
+        return this.deadline.toString();
     }
 }

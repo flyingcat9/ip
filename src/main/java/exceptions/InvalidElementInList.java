@@ -13,6 +13,6 @@ public class InvalidElementInList extends Exception {
      * Error for invalid input.
      */
     public InvalidElementInList() {
-        super("You are accessing an invalid element.");
+        super("Please input a task!");
     }
 }

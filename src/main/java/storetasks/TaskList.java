@@ -2,11 +2,9 @@ package storetasks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import date.DateConverter;
 import exceptions.CannotLoad;
 import exceptions.CannotStore;
 import exceptions.DuplicationError;
@@ -48,7 +46,7 @@ public class TaskList {
              * @throws InvalidInput the input is invalid
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
-                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid {
+                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid, InvalidElementInList {
                 ArrayList<String> tags = new ArrayList<>();
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 for (int i = 0; i < p.size(); i++) {
@@ -64,12 +62,10 @@ public class TaskList {
                 }
                 String task = String.join(" ",
                         descriptWithoutTags.subList(1, indexOfBy));
-                DateConverter de = new DateConverter(
-                            String.join(" ",
+                String deadline = String.join(" ",
                                     descriptWithoutTags.subList(indexOfBy + 1,
-                                            descriptWithoutTags.size())));
-                String d = de.toString();
-                return new Deadlines(task, d, false, tags);
+                                            descriptWithoutTags.size()));
+                return new Deadlines(task, deadline, false, tags);
             }
 
         },
@@ -84,7 +80,8 @@ public class TaskList {
              * @throws InvalidInput the input is invalid
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
-                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid {
+                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid,
+                    InvalidElementInList {
                 ArrayList<String> tags = new ArrayList<>();
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 p.remove(0);
@@ -110,7 +107,8 @@ public class TaskList {
              * @throws InvalidInput the input is invalid
              */
             public Task pass(ArrayList<String> p) throws InvalidDateInput,
-                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid {
+                    InvalidInput, NoDeadlineProvided, EventTimelineInvalid,
+                    InvalidElementInList {
                 ArrayList<String> tags = new ArrayList<>(); // doing the tagging, might do a subfn later
                 ArrayList<String> descriptWithoutTags = new ArrayList<>();
                 p.remove(0);
@@ -126,21 +124,11 @@ public class TaskList {
                 String description = String.join(" ",
                         descriptWithoutTags.subList(0, indexOfFrom));
                 String startingTime = String.join(" ",
-                        descriptWithoutTags.subList(indexOfFrom + 1, indexOfTo));
-                DateConverter st = new DateConverter(startingTime);
-                String stringStartingTime = st.toString();
+                        descriptWithoutTags.subList(indexOfFrom + 1, indexOfTo)).trim();
                 String endingTime = String.join(" ",
-                        descriptWithoutTags.subList(indexOfTo + 1, descriptWithoutTags.size()));
-                DateConverter en = new DateConverter(endingTime);
-                String stringEndingTime = en.toString();
-                Comparator<DateConverter> comparison =
-                        Comparator.comparing(DateConverter::getYear)
-                        .thenComparing(DateConverter::getMonth).thenComparing(DateConverter::getDay);
-                if (comparison.compare(st, en) != 1) {
-                    return new Events(description,
-                            stringStartingTime, stringEndingTime, false, tags);
-                }
-                throw new EventTimelineInvalid();
+                        descriptWithoutTags.subList(indexOfTo + 1, descriptWithoutTags.size())).trim();
+                return new Events(description,
+                        startingTime, endingTime, false, tags);
             }
 
         };
@@ -160,7 +148,7 @@ public class TaskList {
             return -1;
         }
         public abstract Task pass(ArrayList<String> p) throws InvalidDateInput,
-                InvalidInput, NoDeadlineProvided, EventTimelineInvalid;
+                InvalidInput, NoDeadlineProvided, EventTimelineInvalid, InvalidElementInList;
 
     }
 
@@ -192,7 +180,8 @@ public class TaskList {
      */
     public String addToList(String s) throws EventTimelineInvalid,
             InvalidDateInput, InvalidInput, EmptyList,
-            CannotLoad, CannotStore, DuplicationError, NoDeadlineProvided {
+            CannotLoad, CannotStore, DuplicationError, NoDeadlineProvided,
+            InvalidElementInList, EventTimelineInvalid {
         this.taskList = slist.load();
         s = s.trim();
         String[] p = s.split("\\s+");
@@ -217,7 +206,8 @@ public class TaskList {
      * @param i this contains the integer of the arraylist that is marked.
      * @return message
      */
-    public String mark(Integer i) throws CannotLoad, CannotStore {
+    public String mark(Integer i) throws CannotLoad, CannotStore,
+            InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         this.taskList = slist.load();
         assert !this.taskList.isEmpty() : "the tasklist is empty";
         this.taskList.get(i - 1).mark();
@@ -231,7 +221,7 @@ public class TaskList {
      * @param i this contains the integer of the arraylist marked
      * @return message to user
      */
-    public String unmark(Integer i) {
+    public String unmark(Integer i) throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         try {
             this.taskList = slist.load();
             taskList.get(i - 1).unMark();
@@ -250,7 +240,7 @@ public class TaskList {
      * This prints out the list in its entirety
      * @return the list printed out and formatted nicely.
      */
-    public String printList() {
+    public String printList() throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         try {
             this.taskList = slist.load();
             String line = "";
@@ -271,13 +261,13 @@ public class TaskList {
      * @param i index you are deleting
      * @return String you are returning
      */
-    public String delete(Integer i) {
+    public String delete(Integer i) throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         try {
             this.taskList = slist.load();
             String stringy = this.taskList.get(i - 1).toString();
             this.taskList.remove(i - 1);
             slist.store(this.taskList);
-            return "Noted. I have removed the current task!" + stringy + "Now, you have "
+            return "Noted. I have removed the current task!\n" + stringy + "\nNow, you have "
                     + this.taskList.size() + " items in this list.";
         } catch (CannotLoad e) {
             System.out.println(e.getMessage());
@@ -292,7 +282,7 @@ public class TaskList {
      * @param s string to be found
      * @return all strings that match
      */
-    public String find(String s) {
+    public String find(String s) throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         try {
             this.taskList = slist.load();
             String ongoingString = "";
@@ -301,11 +291,14 @@ public class TaskList {
                     ongoingString += taskList.get(i).toString() + "\n";
                 }
             }
-            return ongoingString;
+            if (ongoingString.equals("")) {
+                return "There are no matches.";
+            }
+            return "Here are the matching tasks in your lists:\n" + ongoingString;
         } catch (CannotLoad e) {
             System.out.println(e.getMessage());
         }
-        return "";
+        return "There are no matches.";
     }
 
     /**
@@ -313,7 +306,8 @@ public class TaskList {
      *
      * @return length of the list
      */
-    public int lengthOfList() throws CannotLoad {
+    public int lengthOfList() throws CannotLoad, InvalidElementInList,
+            InvalidDateInput, EventTimelineInvalid {
         taskList = slist.load();
         this.lengthOfList = taskList.size();
         return this.lengthOfList;
@@ -324,7 +318,7 @@ public class TaskList {
      * @return the tags
      */
     public String addTag(String[] s) throws CannotLoad, CannotStore,
-            InvalidElementInList {
+            InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         taskList = slist.load();
         int number = 0;
         number = Integer.parseInt(s[1]) - 1;
@@ -333,8 +327,8 @@ public class TaskList {
         }
         taskList.get(number).addTags(Arrays.copyOfRange(s, 2, s.length));
         slist.store(taskList);
-        return "Got it, I have added the tags to task " + number + ".\n This is  "
-                + " the current element " + taskList.get(number).toString();
+        return "Got it, I have added the tags to task " + (number + 1) + ".\n This is"
+                + " the current element:\n " + taskList.get(number).toString();
     }
 
     /**
@@ -346,7 +340,7 @@ public class TaskList {
      * @throws InvalidElementInList element is invalid
      */
     public String deleteTag(String[] s) throws CannotLoad, CannotStore,
-            InvalidElementInList {
+            InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         taskList = slist.load();
         int number = 0;
         number = Integer.parseInt(s[1]) - 1;
@@ -355,8 +349,8 @@ public class TaskList {
         }
         taskList.get(number).removeTags(Arrays.copyOfRange(s, 2, s.length));
         slist.store(taskList);
-        return "Got it, I have remove the tags for task " + number + ".\n This is  "
-                + " the current element " + taskList.get(number).toString();
+        return "Got it, I have remove the tags for task " + (number + 1) + ".\n This is"
+                + " the current element:\n " + taskList.get(number).toString();
     }
 
 

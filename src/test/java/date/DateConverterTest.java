@@ -28,7 +28,6 @@ public class DateConverterTest {
         assertEquals("Oct 20 2027", actual);
     }
 
-
     // Solution below adapted from
     // https://stackoverflow.com/questions/10148101/junit-testing-assertequals-for-exception
     @Test

@@ -2,6 +2,7 @@ package task.specific;
 
 import java.util.ArrayList;
 
+import exceptions.InvalidElementInList;
 import task.Task;
 
 /**
@@ -16,7 +17,7 @@ public class ToDo extends Task {
      * @param description of task
      * @param finishType whether it is completed or not
      */
-    public ToDo(String description, boolean finishType) {
+    public ToDo(String description, boolean finishType) throws InvalidElementInList {
         super(description, finishType);
     }
 
@@ -27,7 +28,8 @@ public class ToDo extends Task {
      * @param finishType whether it is completed or not
      * @param tags the tags a description it is related to
      */
-    public ToDo(String description, boolean finishType, ArrayList<String> tags) {
+    public ToDo(String description, boolean finishType, ArrayList<String> tags)
+            throws InvalidElementInList {
         super(description, finishType, tags);
     }
 
@@ -37,7 +39,7 @@ public class ToDo extends Task {
      */
     @Override
     public String toString() {
-        return "[ToDo] " + super.toString() + super.taggedToPrint();
+        return "[ToDo]" + super.toString() + super.taggedToPrint();
     }
 
     /**

@@ -1,7 +1,13 @@
 package task.specific;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+import exceptions.EventTimelineInvalid;
+import exceptions.InvalidDateInput;
+import exceptions.InvalidElementInList;
 import task.Task;
 
 /**
@@ -11,8 +17,8 @@ import task.Task;
  * @author: Ong Li Min
  */
 public class Events extends Task {
-    private final String startingTime;
-    private final String endingTime;
+    private final LocalDate startingTime;
+    private final LocalDate endingTime;
 
     /**
      * Creating an event.
@@ -20,10 +26,18 @@ public class Events extends Task {
      * @param sT starting time
      * @param eT ending time
      */
-    public Events(String description, String sT, String eT) {
+    public Events(String description, String sT, String eT) throws
+            InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         super(description);
-        this.startingTime = sT;
-        this.endingTime = eT;
+        try {
+            this.startingTime = LocalDate.parse(sT);
+            this.endingTime = LocalDate.parse(eT);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateInput();
+        }
+        if (startingTime.isAfter(endingTime)) {
+            throw new EventTimelineInvalid();
+        }
     }
 
     /**
@@ -33,10 +47,20 @@ public class Events extends Task {
      * @param eT ending time
      */
     public Events(String description, String sT, String eT, boolean finishType,
-                  ArrayList<String> tags) {
+                  ArrayList<String> tags) throws
+            InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
         super(description, finishType, tags);
-        this.startingTime = sT;
-        this.endingTime = eT;
+        try {
+            assert sT != null : "the starting time is null";
+            assert eT != null : "the ending time is null";
+            this.startingTime = LocalDate.parse(sT);
+            this.endingTime = LocalDate.parse(eT);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateInput();
+        }
+        if (startingTime.isAfter(endingTime)) {
+            throw new EventTimelineInvalid();
+        }
     }
 
     /**
@@ -46,18 +70,31 @@ public class Events extends Task {
      * @param eT ending time
      * @param finishResult of whether it has been completed or not
      */
-    public Events(String description, String sT, String eT, boolean finishResult) {
-        super(description, finishResult);
-        this.startingTime = sT;
-        this.endingTime = eT;
+    public Events(String description, String sT, String eT, boolean finishResult)
+            throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
+        super(description);
+        try {
+            assert sT != null : "the starting time is null";
+            assert eT != null : "the ending time is null";
+            this.startingTime = LocalDate.parse(sT);
+            this.endingTime = LocalDate.parse(eT);
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateInput();
+        }
+        if (startingTime.isAfter(endingTime)) {
+            throw new EventTimelineInvalid();
+        }
     }
 
+
     public String getEndingTime() {
-        return this.endingTime;
+        assert this.endingTime != null : "the ending time is null";
+        return this.endingTime.toString();
     }
 
     public String getStaringTime() {
-        return this.startingTime;
+        assert this.startingTime != null : "the starting time is null";
+        return this.startingTime.toString();
     }
 
     /**
@@ -65,8 +102,10 @@ public class Events extends Task {
      * @return the string
      */
     public String toString() {
+        String stringStarting = this.startingTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        String stringEnding = this.endingTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
         return "[Events]" + super.toString()
-                + " (from: " + startingTime + " to: " + endingTime + ") "
+                + " (from: " + stringStarting + " to: " + stringEnding + ") "
                 + super.taggedToPrint();
     }
 
@@ -77,7 +116,7 @@ public class Events extends Task {
     @Override
     public String store() {
         return "[Events]\"\"" + super.store() + "\\from"
-                + startingTime + "\"\"" + "\\to" + endingTime
+                + startingTime.toString() + "\"\"" + "\\to" + endingTime.toString()
                 + "\"\"" + super.taggedStrings();
     }
 }

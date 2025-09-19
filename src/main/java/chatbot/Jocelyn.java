@@ -1,6 +1,5 @@
 package chatbot;
 
-import exceptions.CannotLoad;
 import parse.Parser;
 import storage.StoringList;
 
@@ -16,13 +15,13 @@ public class Jocelyn {
     /**
      * Main chat bot.
      */
-    public static void main(String[] args) {
+    public Jocelyn() {
         StoringList a = new StoringList();
         try {
             a.load();
             Parser p = new Parser();
 
-        } catch (CannotLoad e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

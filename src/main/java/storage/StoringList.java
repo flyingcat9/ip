@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 import exceptions.CannotLoad;
 import exceptions.CannotStore;
+import exceptions.EventTimelineInvalid;
+import exceptions.InvalidDateInput;
+import exceptions.InvalidElementInList;
 import task.Task;
 import task.specific.Deadlines;
 import task.specific.Events;
@@ -23,18 +26,19 @@ public class StoringList {
 
     /**
      * In charge of loading the list
-     * Used ChatGPT to store the list better.
+     * Used ChatGPT to store the list better in terms for format.
      * @return the final updated list from the file
      * @throws CannotLoad cannot load the list
      */
-    public ArrayList<Task> load() throws CannotLoad {
+    public ArrayList<Task> load() throws CannotLoad, InvalidElementInList,
+            InvalidDateInput, EventTimelineInvalid {
         File directory = new File("theData");
         ArrayList<Task> theList = new ArrayList<>();
         // make directory if it does not exist
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        File theFile = new File(directory, "chatbot.Jocelyn.txt");
+        File theFile = new File(directory, "Jocelyn.txt");
         if (!theFile.exists()) {
             try {
                 theFile.createNewFile();
@@ -94,7 +98,7 @@ public class StoringList {
     public void store(ArrayList<Task> t) throws CannotStore {
         try {
             File directory = new File("theData");
-            File theFinalFile = new File(directory, "chatbot.Jocelyn.txt");
+            File theFinalFile = new File(directory, "Jocelyn.txt");
             FileWriter a = new FileWriter(theFinalFile, false);
             for (Task theTask : t) {
                 a.write(theTask.store() + "\n");

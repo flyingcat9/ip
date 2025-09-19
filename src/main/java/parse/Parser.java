@@ -36,6 +36,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 return e.printList();
             }
         },
@@ -50,6 +51,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 if (e.lengthOfList() > 0) {
                     return e.mark(Integer.parseInt(statement[1]));
                 }
@@ -106,6 +108,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 if (e.lengthOfList() > 0) {
                     return e.find(String.join(" ",
                             Arrays.copyOfRange(statement, 1, statement.length)));
@@ -124,6 +127,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 return "BYEBYEBYE";
             }
         },
@@ -138,6 +142,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 return e.addToList(String.join(" ", statement));
             }
         },
@@ -158,6 +163,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 return e.addTag(statement);
             }
         },
@@ -166,6 +172,7 @@ public class Parser {
                     InvalidDateInput, InvalidInput, EmptyList, CannotStore,
                     CannotLoad, EventTimelineInvalid, InvalidElementInList, DuplicationError,
                     NoDeadlineProvided {
+                assert statement != null : "the statement is null";
                 return e.deleteTag(statement);
             }
         };

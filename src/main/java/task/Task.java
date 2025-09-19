@@ -2,6 +2,8 @@ package task;
 
 import java.util.ArrayList;
 
+import exceptions.InvalidElementInList;
+
 /**
  * This class represents a task that needs to be done.
  *
@@ -18,9 +20,12 @@ public class Task {
      * @param p progress
      * @param tag tags it's associated with
      */
-    public Task(String d, Boolean p, ArrayList<String> tag) {
+    public Task(String d, Boolean p, ArrayList<String> tag) throws InvalidElementInList {
         for (int i = 0; i < tag.size(); i++) {
             tags.add(tag.get(i));
+        }
+        if (d.equals("")) {
+            throw new InvalidElementInList();
         }
         this.descript = d;
         this.progressStatus = p;
@@ -32,7 +37,10 @@ public class Task {
      * @param d description
      * @param p progress
      */
-    public Task(String d, Boolean p) {
+    public Task(String d, Boolean p) throws InvalidElementInList {
+        if (descript.equals("")) {
+            throw new InvalidElementInList();
+        }
         this.descript = d;
         this.progressStatus = p;
     }
@@ -41,7 +49,10 @@ public class Task {
      * Creates a new task
      * @param d description
      */
-    public Task(String d) {
+    public Task(String d) throws InvalidElementInList {
+        if (descript.equals("")) {
+            throw new InvalidElementInList();
+        }
         descript = d;
         progressStatus = false;
     }
@@ -51,6 +62,7 @@ public class Task {
      * @return the string as provided
      */
     public String getProgressStatus() {
+        assert progressStatus != null : "progress status is null.";
         if (progressStatus.equals(false)) {
             return "O";
         }
@@ -61,6 +73,7 @@ public class Task {
      * marks task as completed
      */
     public void mark() {
+        assert progressStatus != null : "progress status is null";
         this.progressStatus = true;
     }
 
@@ -68,6 +81,7 @@ public class Task {
      * unmarks the task
      */
     public void unMark() {
+        assert progressStatus != null : "progress status is null";
         this.progressStatus = false;
     }
 
@@ -136,8 +150,6 @@ public class Task {
         }
     }
 
-
-
-
 }
+
 
