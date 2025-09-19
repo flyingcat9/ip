@@ -88,18 +88,6 @@ public class TheMainWindow extends AnchorPane {
     }
 
     /**
-     * Checker to see when the input loop stops.
-     * @param input Input from user.
-     * @return Whether it is time to stop the loop.
-     */
-    public boolean exitingTheLoop(String input) {
-        if (input == null || input.equals("") || input.equals("bye")) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * sets the stage to give bye input
      * @param stage passed form theMainScene
      */

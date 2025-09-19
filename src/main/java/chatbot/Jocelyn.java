@@ -4,10 +4,10 @@ import parse.Parser;
 import storage.StoringList;
 
 /**
- * This is the main method of the ChatBot.
- * Okay for now.
- *
- * @author: Ong Li Min
+ * This is the main method of the ChatBot. This ChatBot has a number of
+ * features such as allow individuals to add, delete, mark, unmark, tag and even
+ * find the tasks that they want. It is split up into 3 differet categories:
+ * ToDo, Deadline and Events.
  */
 
 public class Jocelyn {

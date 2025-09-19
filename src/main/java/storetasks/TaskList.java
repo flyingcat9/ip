@@ -285,8 +285,12 @@ public class TaskList {
      * @param s string to be found
      * @return all strings that match
      */
-    public String find(String s) throws InvalidElementInList, InvalidDateInput, EventTimelineInvalid {
+    public String find(String s) throws InvalidElementInList,
+            InvalidDateInput, EventTimelineInvalid, InvalidInput {
         try {
+            if (s == null || s.equals("")) {
+                throw new InvalidInput();
+            }
             this.taskList = slist.load();
             String ongoingString = "";
             for (int i = 0; i < taskList.size(); i++) {
@@ -294,7 +298,7 @@ public class TaskList {
                     ongoingString += taskList.get(i).toString() + "\n";
                 }
             }
-            if (ongoingString.equals("")) {
+            if (ongoingString.length() <= 0) {
                 return "There are no matches.";
             }
             return "Here are the matching tasks in your lists:\n" + ongoingString;

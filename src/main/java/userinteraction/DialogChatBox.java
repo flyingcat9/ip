@@ -26,9 +26,10 @@ public class DialogChatBox extends HBox {
     private final chatbot.Jocelyn jocelyn = new chatbot.Jocelyn();
 
     /**
-     * Creating a new instance of a dialog chat box.
-     * @param text Text that is passed in.
-     * @param img Image that you get.
+     * Creates a new instance of a dialog chat box that appears on the GUI
+     *
+     * @param text Text that is passed in by the user.
+     * @param img Image that you get that is already provided and taken from Pixabay.
      */
     private DialogChatBox(String text, Image img) {
         try {

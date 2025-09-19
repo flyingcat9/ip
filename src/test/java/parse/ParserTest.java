@@ -9,8 +9,18 @@ import exceptions.InvalidInput;
 import exceptions.NoDeadlineProvided;
 import storetasks.TaskList;
 
+/**
+ * This function tests the method validityOfWords in the Parser class.
+ * It has a variety of inputs, both some of which can for there to be an error
+ * and valid inputs.
+ */
 public class ParserTest {
 
+
+    // Solution below inspired by
+    // https://stackoverflow.com/questions/10148101/junit-testing-assertequals-for-exception
+    // I used it to get ideas on how to compare an error message vs
+    // just valid input.
     @Test
     public void blankSpace() throws Exception {
         try {
