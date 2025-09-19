@@ -106,7 +106,8 @@ public class ParserTest {
         e.addToList("event eat lunch /from 2025-04-03 /to 2025-04-05");
         String actual = Parser.validityOfWords("todo do CS2100 homework", e);
         assertEquals("Got it, I have added this to my list!\n"
-                + "[ToDo]  [O] do CS2100 homework ", actual);
+                + "[ToDo] [O] do CS2100 homework \n"
+                + "Now, you have 38 objects in your list right now!", actual);
     }
 
     @Test
@@ -118,7 +119,8 @@ public class ParserTest {
         String actual = Parser.validityOfWords("deadline do CS2100 "
                 + "homework /by 2025-05-04", e);
         assertEquals("Got it, I have added this to my list!\n"
-                + "[Deadline] [O] do CS2100 homework  (by: May 4 2025)", actual);
+                + "[Deadline] [O] do CS2100 homework  (by: May 4 2025) \n"
+                + "Now, you have 50 objects in your list right now!", actual);
     }
 
     @Test
@@ -129,7 +131,7 @@ public class ParserTest {
         String actual = Parser.validityOfWords("event eat lunch /from "
                 + "2025-04-03 /to 2025-04-05", e);
         assertEquals("Got it, I have added this to my list!\n"
-                + "[Events] [O] eat lunch  (from: Apr 3 2025 to: "
-                + "Apr 5 2025) ", actual);
+                + "[Events] [O] eat lunch  (from: Apr 3 2025 to: Apr 5 2025) \n"
+                + "Now, you have 46 objects in your list right now!", actual);
     }
 }
